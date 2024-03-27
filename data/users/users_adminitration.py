@@ -4,6 +4,7 @@ from class_user import User
 con = sqlite3.connect("users.db")
 cur = con.cursor()
 
+# esta función es MUY NECESARIA, errores del módulo
 def close_con_users() -> None:
     """Función para cerrar el conector de este módulo"""
     con.close()
@@ -39,6 +40,8 @@ class WrongPassword(UsersExceptions):
 
 # functions
 def add_user(name: str, password: str) -> None:
+    """Agregar usuarios a la base de datos"""
+
     cur.execute(f'SELECT name FROM users WHERE name = "{name}";')
     
     if len(cur.fetchall()) != 0:
@@ -51,6 +54,8 @@ def add_user(name: str, password: str) -> None:
 
 
 def delet_user(name: str, password: str) -> None:
+    """Eliminar usuarios de la base de datos"""
+
     cur.execute(f'SELECT name FROM users WHERE name = "{name}";')
 
     if(len(cur.fetchall())) == 0:
@@ -67,7 +72,8 @@ def delet_user(name: str, password: str) -> None:
     return
 
 def show_users() -> list[tuple[str]]:
-    
+    """Retorna una lista con los nombres de los usuarios"""
+
     cur.execute("SELECT name FROM users;")
     resultado = cur.fetchall()
     
