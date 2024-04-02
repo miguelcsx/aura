@@ -33,8 +33,8 @@ aura/
 │
 ├── README.md               # Project README file
 ├── LICENSE                 # Project license file
-└── setup.py                # Setup script for packaging the application
-
+├── setup.py                # Setup script for packaging the application
+└── .env                    # Project secrets
 ```
 
 ## Root Directory
