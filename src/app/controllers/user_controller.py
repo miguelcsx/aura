@@ -1,8 +1,8 @@
 # src/app/controllers/user-controller.py
 
 from sqlalchemy.exc import IntegrityError
-from app.database.base import Session
-from app.models.user import User
+from database.base import Session
+from models.user import User
 from datetime import datetime
 
 class UserController:
