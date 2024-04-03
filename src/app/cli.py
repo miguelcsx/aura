@@ -1,8 +1,11 @@
 # src/app/cli.py
 import sys
-from app.controllers.user_controller import UserController
+from controllers.user_controller import UserController
+from database.base import create_tables
 
 def main():
+    # Call create_tables function before accessing the UserController
+    create_tables()
     user_controller = UserController()
 
     if len(sys.argv) < 2:
