@@ -1,7 +1,7 @@
-# src/app/business/services.py
+# src/app/business/services/user_service.py
 
-from business.models.user import User
-from persistence.repositories.user_repository import UserRepository
+from app.business.models.user import User
+from app.persistence.repositories.user_repository import UserRepository
 
 class UserService:
     def __init__(self):
@@ -27,3 +27,7 @@ class UserService:
     def delete_user(self, id):
         user = self.user_repository.get_by_id(id)
         return self.user_repository.delete(user)
+    
+    def delete_user_by_discord_id(self, discord_id):
+        # user = self.user_repository.get_by_discord_id(discord_id)
+        return self.user_repository.discord_delete(discord_id)

@@ -1,6 +1,6 @@
 # src/app/presentation/views/user_view.py
 
-from presentation.controllers.user_controller import UserController
+from app.presentation.controllers.user_controller import UserController
 
 class UserView:
     def __init__(self):
@@ -35,4 +35,9 @@ class UserView:
     def delete_user(self):
         id = int(input("Enter user id: "))
         user = self.user_controller.delete_user(id)
+        print(f"User deleted: {user}")
+
+    def delete_user_by_discord_id(self):
+        discord_id = input("Enter discord id: ")
+        user = self.user_controller.delete_user_by_discord_id(discord_id)
         print(f"User deleted: {user}")

@@ -1,6 +1,6 @@
 # src/app/presentation/controllers/user_controller.py
 
-from business.services.user_service import UserService
+from app.business.services.user_service import UserService
 
 class UserController:
     def __init__(self):
@@ -23,3 +23,6 @@ class UserController:
     
     def delete_user(self, id):
         return self.user_service.delete_user(id)
+
+    def delete_user_by_discord_id(self, discord_id):
+        return self.user_service.delete_user_by_discord_id(discord_id)

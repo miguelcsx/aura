@@ -2,8 +2,8 @@
 
 import os
 from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy import inspect
+from sqlalchemy.orm import declarative_base, sessionmaker
 
 # Specify the path to the database
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -19,6 +19,9 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
 # Create the tables in the database
-def create_tables():
-    Base.metadata.create_all(bind=engine)
-    print("Tables created successfully.")
+def create_tables() -> None:
+    # Check if the tables need to be created
+    inspector = inspect(engine)
+    if not inspector.get_table_names():
+        Base.metadata.create_all(bind=engine)
+        print("Tables created successfully.")
