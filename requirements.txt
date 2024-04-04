@@ -6,7 +6,12 @@ discord.py==2.3.2
 frozenlist==1.4.1
 greenlet==3.0.3
 idna==3.6
+iniconfig==2.0.0
 multidict==6.0.5
+packaging==24.0
+pluggy==1.4.0
+pytest==8.1.1
+setuptools==69.2.0
 SQLAlchemy==2.0.29
 typing_extensions==4.10.0
 yarl==1.9.4
