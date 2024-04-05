@@ -1,15 +1,12 @@
-# src/app/main.py
+# src/scripts/cli/user_cli.py
 
-from presentation.views.user_view import UserView
-from database.db import create_tables, engine
-from sqlalchemy import inspect
+from app.database.db import create_tables
+from app.presentation.views.user_view import UserView
 
-def main():
-    # Check if the tables need to be created
-    inspector = inspect(engine)
-    if not inspector.get_table_names():
-        create_tables()
+def run_user_cli():
 
+    # Create the tables in the database
+    create_tables()
 
     user_view = UserView()
 
@@ -42,6 +39,5 @@ def main():
         else:
             print("Invalid choice. Please try again.")
 
-
 if __name__ == "__main__":
-    main()
+    run_user_cli()

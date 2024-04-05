@@ -1,8 +1,8 @@
 # src/app/persistence/repositories/user_repository.py
 
-from database.db import SessionLocal
-from persistence.mappers.user_mapper import UserMapper
-from database.models.user_model import UserModel
+from app.database.db import SessionLocal
+from app.persistence.mappers.user_mapper import UserMapper
+from app.database.models.user_model import UserModel
 
 class UserRepository:
     def __init__(self):
@@ -36,6 +36,12 @@ class UserRepository:
     
     def delete(self, user):
         user_model = UserMapper.user_to_model(user)
+        self.session.delete(user_model)
+        self.session.commit()
+        return UserMapper.model_to_user(user_model)
+
+    def discord_delete(self, discord_id):
+        user_model = self.session.query(UserModel).filter(UserModel.discord_id == discord_id).first()
         self.session.delete(user_model)
         self.session.commit()
         return UserMapper.model_to_user(user_model)
