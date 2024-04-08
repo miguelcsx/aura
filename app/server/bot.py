@@ -2,7 +2,7 @@
 
 import discord
 from discord.ext import commands
-from app.business.services.user_service import UserService
+from business.services.user_service import UserService
 
 class Chatbot(commands.Bot):
     def __init__(self, command_prefix: str, intents: discord.Intents, discord_token: str):
@@ -25,6 +25,7 @@ class Chatbot(commands.Bot):
 
 def setup_bot(discord_token: str) -> None:
     intents = discord.Intents.default()
+    intents.message_content = True
     intents.members = True
     
     bot = Chatbot(command_prefix="!", intents=intents, discord_token=discord_token)
