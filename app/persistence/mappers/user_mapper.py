@@ -1,7 +1,7 @@
 # src/app/persistence/mappers/user_mapper.py
 
-from app.business.models.user import User
-from app.database.models.user_model import UserModel
+from business.models.user import User
+from database.models.user_model import UserModel
 
 class UserMapper:
     @staticmethod

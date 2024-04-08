@@ -1,8 +1,8 @@
 # src/app/persistence/repositories/user_repository.py
 
-from app.database.db import SessionLocal
-from app.persistence.mappers.user_mapper import UserMapper
-from app.database.models.user_model import UserModel
+from database.db import SessionLocal
+from persistence.mappers.user_mapper import UserMapper
+from database.models.user_model import UserModel
 
 class UserRepository:
     def __init__(self):
