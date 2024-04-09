@@ -3,8 +3,10 @@
 import discord
 from discord.ext import commands
 from business.services.user_service import UserService
+from server.commands.discordcommands import logiccommands
 
-class Chatbot(commands.Bot):
+
+class Chatbot(commands.Bot, logiccommands):
     def __init__(self, command_prefix: str, intents: discord.Intents, discord_token: str):
         super().__init__(command_prefix=command_prefix, intents=intents)
         self.discord_token = discord_token
@@ -29,6 +31,11 @@ class Chatbot(commands.Bot):
         self.user_service.delete_user_by_discord_id(member.id)
 
     def custom_commands(self) -> None:
+
+        @self.command(help="Consult any topic in wikipedia")
+        async def wikipedia(ctx, subject: str):
+            
+            await ctx.send(embed=logiccommands().wikipedia(subject))
 
         self.remove_command('help') #necesario para tener la instancia personalizada del comando    
         @self.command(help="List of available commands")
