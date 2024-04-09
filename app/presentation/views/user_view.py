@@ -1,6 +1,6 @@
-# src/app/presentation/views/user_view.py
+# app/presentation/views/user_view.py
 
-from presentation.controllers.user_controller import UserController
+from app.presentation.controllers.user_controller import UserController
 
 class UserView:
     def __init__(self):

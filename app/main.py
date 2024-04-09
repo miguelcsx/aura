@@ -1,10 +1,10 @@
-# src/app/main.py
+# app/main.py
 
 # Load environment variables
 import os
 from dotenv import load_dotenv
-from server.bot import setup_bot
-from database.db import create_tables
+from app.server.bot import setup_bot
+from app.database.db import create_tables
 
 def main():
     # Check if the tables need to be created

@@ -2,8 +2,8 @@
 
 import discord
 from discord.ext import commands
-from business.services.user_service import UserService
-from server.commands.discord_commands import LogicCommands
+from app.business.services.user_service import UserService
+from app.server.commands.discord_commands import LogicCommands
 
 class Chatbot(commands.Bot):
     def __init__(self, command_prefix: str, intents: discord.Intents, discord_token: str):
@@ -25,7 +25,15 @@ class Chatbot(commands.Bot):
     async def on_member_remove(self, member):
         self.user_service.delete_user_by_discord_id(member.id)
 
-    def custom_commands(self): # función para implementar los comandos al bot de discord    
+    # Function to implement commands to the discord bot
+    def custom_commands(self):
+        @self.command(help=LogicCommands.wikipedia_help, brief=LogicCommands.wikipedia_brief)
+        async def wikipedia(ctx, theme: str):
+            consult = LogicCommands().wikipedia(theme)
+            if consult is None:
+                await ctx.send(f"{theme} not found")
+            else:
+                await ctx.send(embed=consult)
 
         @self.command(help= LogicCommands.wikipedia_help, brief= LogicCommands.wikipedia_brief)
         async def wikipedia(ctx, theme: str):

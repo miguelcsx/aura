@@ -1,6 +1,6 @@
-# src/app/presentation/controllers/user_controller.py
+# app/presentation/controllers/user_controller.py
 
-from business.services.user_service import UserService
+from app.business.services.user_service import UserService
 
 class UserController:
     def __init__(self):

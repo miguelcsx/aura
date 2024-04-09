@@ -1,5 +1,5 @@
 import discord
-from wikipedia_api.scraper import WikiDocs
+from app.wikipedia_api.scraper import WikiDocs
 from wikipedia.exceptions import PageError
 
 class LogicCommands():
