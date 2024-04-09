@@ -32,18 +32,10 @@ class Chatbot(commands.Bot, logiccommands):
 
     def custom_commands(self) -> None:
 
-        @self.command(help="Consult any topic in wikipedia")
-        async def wikipedia(ctx, subject: str):
-            
+        @self.command(help=logiccommands.wikipeida_help, brief=logiccommands.wikipedia_brief)
+        async def wikipedia(ctx, subject: str=None):   
             await ctx.send(embed=logiccommands().wikipedia(subject))
 
-        self.remove_command('help') #necesario para tener la instancia personalizada del comando    
-        @self.command(help="List of available commands")
-        async def help(ctx):
-            embed = discord.Embed(title="Help", description="List of available commands")
-            for command in self.commands:
-                embed.add_field(name=command.name, value=command.help, inline=False)
-            await ctx.send(embed=embed)
         
 
 

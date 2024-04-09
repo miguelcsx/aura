@@ -1,6 +1,7 @@
 import wikipedia
 
 class wikidocs():
+    
     def __init__(self, title: str) -> None:
         names: list[str] = wikipedia.search(title)
         if len(names) != 0:
