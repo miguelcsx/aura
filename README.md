@@ -2,7 +2,6 @@
 
 AURA is a chatbot and virtual study assistant designed to facilitate and enhance the learning process at an educational level. The primary goal of AURA is to leverage the principles of the memory curve and spaced repetition to help students retain information more effectively.
 
-
 ## Key Features
 
 1. **Customized Topics:** AURA allows users to select topics or subjects they want to focus on, ensuring a personalized learning experience.
@@ -15,6 +14,28 @@ AURA is a chatbot and virtual study assistant designed to facilitate and enhance
 8. **Graphical User Interface (GUI):** AURA will feature a user-friendly graphical interface for seamless interaction and navigation.
 9. **External API Integration:** AURA will integrate with external APIs, such as calendar and notification services, to provide reminders for upcoming exams and study sessions, as well as study timers.
 10. **Statistical Reports and Insights:** AURA will generate statistical reports and offer suggestions for improvement based on the user's performance and study habits.
+
+## Usage
+
+To use AURA, follow these steps:
+
+1. Clone the repository:
+
+    ```bash
+    git clone https://github.com/miguelcsx/aura.git
+    ```
+
+2. Install the required dependencies:
+
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+3. Run the application:
+
+    ```bash
+    python -m app.main
+    ```
 
 ## License
 
