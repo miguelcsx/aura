@@ -3,16 +3,18 @@
 import discord
 from discord.ext import commands
 from business.services.user_service import UserService
+from server.commands.discord_commands import LogicCommands
 
 class Chatbot(commands.Bot):
     def __init__(self, command_prefix: str, intents: discord.Intents, discord_token: str):
         super().__init__(command_prefix=command_prefix, intents=intents)
         self.discord_token = discord_token
         self.user_service = UserService()
+        self.custom_commands()
 
     async def on_ready(self):
         print(f"Logged in as {self.user.name}")
-
+    
     async def on_member_join(self, member):
         self.user_service.create_user(member.id, member.name)
 
@@ -22,6 +24,17 @@ class Chatbot(commands.Bot):
 
     async def on_member_remove(self, member):
         self.user_service.delete_user_by_discord_id(member.id)
+
+    def custom_commands(self): # función para implementar los comandos al bot de discord    
+
+        @self.command(help= LogicCommands.wikipedia_help, brief= LogicCommands.wikipedia_brief)
+        async def wikipedia(ctx, theme: str):
+            consult = LogicCommands().wikipedia(theme)
+
+            if consult is None:
+                await ctx.send(f"{theme} not found")
+            else:
+                await ctx.send(embed=consult)
 
 def setup_bot(discord_token: str) -> None:
     intents = discord.Intents.default()
