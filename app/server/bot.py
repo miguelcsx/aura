@@ -42,7 +42,7 @@ class Chatbot(commands.Bot):
                 else:
                     await ctx.send(embed=consult)
 
-        @self.command(help=self.logic_commands.create_subject_help, brief=self.logic_commands.create_subject_brief)
+        @self.command(help=self.logic_commands.create_subject_help, brief=self.logic_commands.create_subject_brief, name="create-subject")
         async def create_subject(ctx, name: str, description: str):
             response = self.logic_commands.create_subject(name, description, ctx.author.id)
             await ctx.send(response)
