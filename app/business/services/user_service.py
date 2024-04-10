@@ -5,7 +5,7 @@ from app.persistence.repositories.user_repository import UserRepository
 
 class UserService:
     def __init__(self):
-        self.user_repository = UserRepository()
+        self.user_repository: UserRepository = UserRepository()
 
     def create_user(self, discord_id, username):
         user = User(discord_id=discord_id, username=username)

@@ -5,11 +5,15 @@ from app.wikipedia_api.scraper import WikiDocs
 from wikipedia.exceptions import PageError
 from app.business.services.user_service import UserService
 from app.business.services.subject_service import SubjectService
+
 class LogicCommands():
 
     def __init__(self):
         self.user_service = UserService()
         self.subject_service = SubjectService()
+
+        self.parameter_error: str = "parameter error, write !help <command>"
+
 
         # Help and brief for the wikipedia command
         self.wikipedia_brief = "Consult a topic on wikipedia"
@@ -19,7 +23,8 @@ class LogicCommands():
         self.create_subject_brief = "Create a subject"
         self.create_subject_help = "This command allows you to create a subject. You can use it as follows: !create_subject <name> <description>"
 
-    # Function to query a topic from wikipedia
+
+
     def wikipedia(self, theme: str) -> discord.Embed | None:
         wiki = WikiDocs(theme)
         

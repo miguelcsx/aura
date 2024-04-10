@@ -32,12 +32,15 @@ class Chatbot(commands.Bot):
     # Function to implement commands to the discord bot
     def custom_commands(self):
         @self.command(help=self.logic_commands.wikipedia_help, brief=self.logic_commands.wikipedia_brief)
-        async def wikipedia(ctx, theme: str):
-            consult = self.logic_commands.wikipedia(theme)
-            if consult is None:
-                await ctx.send(f"{theme} not found")
+        async def wikipedia(ctx, theme: str = None):
+            if theme is None:
+                await ctx.send(self.logic_commands.parameter_error)
             else:
-                await ctx.send(embed=consult)
+                consult = self.logic_commands.wikipedia(theme)
+                if consult is None:
+                    await ctx.send(f"{theme} not found")
+                else:
+                    await ctx.send(embed=consult)
 
         @self.command(help=self.logic_commands.create_subject_help, brief=self.logic_commands.create_subject_brief)
         async def create_subject(ctx, name: str, description: str):
