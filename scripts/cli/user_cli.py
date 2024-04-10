@@ -1,4 +1,4 @@
-# src/scripts/cli/user_cli.py
+# scripts/cli/user_cli.py
 
 from app.database.db import create_tables
 from app.presentation.views.user_view import UserView

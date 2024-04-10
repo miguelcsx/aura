@@ -1,7 +1,7 @@
-# src/app/business/services/user_service.py
+# app/business/services/user_service.py
 
-from business.models.user import User
-from persistence.repositories.user_repository import UserRepository
+from app.business.models.user import User
+from app.persistence.repositories.user_repository import UserRepository
 
 class UserService:
     def __init__(self):

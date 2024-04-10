@@ -1,7 +1,7 @@
-# src/app/persistence/mappers/user_mapper.py
+# app/persistence/mappers/user_mapper.py
 
-from business.models.user import User
-from database.models.user_model import UserModel
+from app.business.models.user import User
+from app.database.models.user_model import UserModel
 
 class UserMapper:
     @staticmethod
@@ -10,7 +10,8 @@ class UserMapper:
             id=user.id,
             discord_id=user.discord_id,
             username=user.username,
-            created_at=user.created_at
+            created_at=user.created_at,
+            subjects=user.subjects
         )
     
     @staticmethod
@@ -19,5 +20,6 @@ class UserMapper:
             id=user_model.id,
             discord_id=user_model.discord_id,
             username=user_model.username,
-            created_at=user_model.created_at
+            created_at=user_model.created_at,
+            subjects=user_model.subjects
         )
