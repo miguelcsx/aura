@@ -37,4 +37,3 @@ def test_create_tables_when_tables_exist(mock_inspector, mock_create_all):
     # Assert
     mock_inspector.assert_called_once_with(engine)
     mock_create_all.assert_not_called()
-
