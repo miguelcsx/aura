@@ -9,6 +9,8 @@ class WikiDocs():
         try:
             self.name = theme
             self.content= wikipedia.summary(self.name)
+            #limit de string
+            self.content = self.content[:self.content.find('\n')]
             self.url = wikipedia.page(theme).url
         except (wikipedia.exceptions.WikipediaException):
             self.name = None
