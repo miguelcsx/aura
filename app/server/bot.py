@@ -3,7 +3,7 @@
 import discord
 from discord.ext import (
     commands,
-    tasks
+    tasks,
 )
 from app.business.services.user_service import UserService
 from app.business.services.subject_service import SubjectService
@@ -44,10 +44,18 @@ class Chatbot(commands.Bot):
 
 # Function to implement commands to the discord bot
 def custom_commands(bot: Chatbot):
-    # wikipedia = search summary
-    @bot.tree.command(description=bot.wikipedia_command.get_help()["brief"], name="wikipedia")
-    async def wikipedia(interaction: discord.Interaction, theme: str, sub_command: str = "search"):
-        
+    
+    # subcommand groups
+    groups: list[discord.app_commands.Group] = list()
+    wiki: discord.app_commands.Group = discord.app_commands.Group(name="wikipedia", description=bot.wikipedia_command.get_help()["brief"])
+    groups.append(wiki)
+    create: discord.app_commands.Group = discord.app_commands.Group(name="create", description=bot.create_command.get_help()["brief"])
+    groups.append(create)
+
+    @wiki.command(name="search")
+    async def wikipedia_search(interaction: discord.Interaction, theme: str) -> None:
+        sub_command: str = "search"
+
         await interaction.response.send_message(embed=discord.Embed(title=f"Serching {theme} in wikipedia"))
         consult = bot.wikipedia_command.execute(sub_command, theme)
 
@@ -55,8 +63,32 @@ def custom_commands(bot: Chatbot):
             await interaction.edit_original_response(embed=consult)
         else:
             await interaction.response.send_message(consult)
+    
+    @wiki.command(name="summary")
+    async def wikipedia_summary(interaction: discord.Interaction, theme: str) -> None:
+        sub_command: str = "summary"
 
+        await interaction.response.send_message(embed=discord.Embed(title=f"Serching {theme} in wikipedia"))
+        consult = bot.wikipedia_command.execute(sub_command, theme)
 
+        if isinstance(consult, discord.Embed):
+            await interaction.edit_original_response(embed=consult)
+        else:
+            await interaction.response.send_message(consult)
+    
+    @create.command(name="subject")
+    async def create_subject(interaction: discord.Interaction, name: str, description: str) -> None:
+
+        discord_id = interaction.user.id
+        consult = bot.create_command.execute("subject", name, description, discord_id)
+
+        await interaction.response.send_message(consult)
+    
+    
+    # add subcommands
+    for i in groups:
+        bot.tree.add_command(i)
+    
 
 
 def setup_bot(discord_token: str) -> None:
