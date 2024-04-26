@@ -22,8 +22,6 @@ class Chatbot(commands.Bot):
         self.wikipedia_command = WikipediaCommand()
         self.create_command = CreateCommand()
 
-        self.custom_commands()
-
     async def on_ready(self):
         print(f"Logged in as {self.user.name}")
         await self.tree.sync()
@@ -44,39 +42,21 @@ class Chatbot(commands.Bot):
         self.user_service.delete_user(user.id)
         print(f"{member.name} has left the server")
 
-    # Function to implement commands to the discord bot
-    def custom_commands(self):
-        @self.command(help=self.wikipedia_command.get_help()["help"], brief=self.wikipedia_command.get_help()["help"], name="wikipedia")
-        async def wikipedia(ctx, sub_command: str, theme: str = None):
-            if sub_command not in ["search", "summary"]:
-                await ctx.send("Invalid command. Use !help wikipedia for more information.")
-                return
-            
-            if theme is None:
-                await ctx.send(self.wikipedia_command.parameter_error)
-                return
-            
-            consult = self.wikipedia_command.execute(sub_command, theme)
+# Function to implement commands to the discord bot
+def custom_commands(bot: Chatbot):
+    # wikipedia = search summary
+    @bot.tree.command(description=bot.wikipedia_command.get_help()["brief"], name="wikipedia")
+    async def wikipedia(interaction: discord.Interaction, theme: str, sub_command: str = "search"):
+        
+        await interaction.response.send_message(embed=discord.Embed(title=f"Serching {theme} in wikipedia"))
+        consult = bot.wikipedia_command.execute(sub_command, theme)
 
-            if isinstance(consult, discord.Embed):
-                await ctx.send(embed=consult)
-            else:
-                await ctx.send(consult)
+        if isinstance(consult, discord.Embed):
+            await interaction.edit_original_response(embed=consult)
+        else:
+            await interaction.response.send_message(consult)
 
-        @self.command(help=self.create_command.get_help()["help"], brief=self.create_command.get_help()["help"], name="create")
-        async def create(ctx, entity_type: str, name: str, description: str):
-            if entity_type not in ["subject"]:
-                await ctx.send("Invalid command. Use !help create for more information.")
-                return
 
-            if name is None or description is None:
-                await ctx.send(self.create_command.parameter_error)
-                return
-
-            discord_id = ctx.author.id
-            consult = self.create_command.execute(entity_type, name, description, discord_id)
-
-            await ctx.send(consult)        
 
 
 def setup_bot(discord_token: str) -> None:
@@ -86,4 +66,5 @@ def setup_bot(discord_token: str) -> None:
     
     bot = Chatbot(command_prefix="!", intents=intents, discord_token=discord_token)
 
+    custom_commands(bot)
     return bot
