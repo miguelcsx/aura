@@ -11,11 +11,11 @@ class CreateCommand(Commands):
         self.user_service = UserService()
         self.subject_service = SubjectService()
 
-    def execute(self, entity_type: str, discord_id: str, *args):
+    def execute(self, entity_type: str, name: str, description: str, discord_id: str):
         if entity_type == "subject":
-            return self.create_subject(*args, discord_id)
+            return self.create_subject(name, description, discord_id)
         elif entity_type == "topic":
-            return self.create_topic(*args, discord_id)
+            return self.create_topic(name, description, discord_id)
         else:
             return self.get_help(entity_type)
         

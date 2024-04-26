@@ -5,7 +5,6 @@ from discord.ext import (
     commands,
     tasks
 )
-from discord import app
 from app.business.services.user_service import UserService
 from app.business.services.subject_service import SubjectService
 from app.business.services.topic_service import TopicService
@@ -65,17 +64,17 @@ class Chatbot(commands.Bot):
                 await ctx.send(consult)
 
         @self.command(help=self.create_command.get_help()["help"], brief=self.create_command.get_help()["help"], name="create")
-        async def create(ctx, entity_type: str, *args):
+        async def create(ctx, entity_type: str, name: str, description: str):
             if entity_type not in ["subject"]:
                 await ctx.send("Invalid command. Use !help create for more information.")
                 return
 
-            if len(args) < 2:
+            if name is None or description is None:
                 await ctx.send(self.create_command.parameter_error)
                 return
 
             discord_id = ctx.author.id
-            consult = self.create_command.execute(entity_type, discord_id, *args)
+            consult = self.create_command.execute(entity_type, name, description, discord_id)
 
             await ctx.send(consult)        
 
