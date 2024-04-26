@@ -1,7 +1,11 @@
 # src/app/discord/bot.py
 
 import discord
-from discord.ext import commands
+from discord.ext import (
+    commands,
+    tasks
+)
+from discord import app
 from app.business.services.user_service import UserService
 from app.business.services.subject_service import SubjectService
 from app.business.services.topic_service import TopicService
@@ -23,6 +27,7 @@ class Chatbot(commands.Bot):
 
     async def on_ready(self):
         print(f"Logged in as {self.user.name}")
+        await self.tree.sync()
     
     async def on_member_join(self, member):
         self.user_service.create_user(member.id, member.name)
@@ -70,7 +75,7 @@ class Chatbot(commands.Bot):
                 return
 
             discord_id = ctx.author.id
-            consult = self.create_command.execute(entity_type, *args, discord_id=discord_id)
+            consult = self.create_command.execute(entity_type, discord_id, *args)
 
             await ctx.send(consult)        
 
