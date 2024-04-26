@@ -1,7 +1,10 @@
 # src/app/discord/bot.py
 
 import discord
-from discord.ext import commands
+from discord.ext import (
+    commands,
+    tasks
+)
 from app.business.services.user_service import UserService
 from app.business.services.subject_service import SubjectService
 from app.business.services.topic_service import TopicService
@@ -23,6 +26,7 @@ class Chatbot(commands.Bot):
 
     async def on_ready(self):
         print(f"Logged in as {self.user.name}")
+        await self.tree.sync()
     
     async def on_member_join(self, member):
         self.user_service.create_user(member.id, member.name)
@@ -60,17 +64,17 @@ class Chatbot(commands.Bot):
                 await ctx.send(consult)
 
         @self.command(help=self.create_command.get_help()["help"], brief=self.create_command.get_help()["help"], name="create")
-        async def create(ctx, entity_type: str, *args):
+        async def create(ctx, entity_type: str, name: str, description: str):
             if entity_type not in ["subject"]:
                 await ctx.send("Invalid command. Use !help create for more information.")
                 return
 
-            if len(args) < 2:
+            if name is None or description is None:
                 await ctx.send(self.create_command.parameter_error)
                 return
 
             discord_id = ctx.author.id
-            consult = self.create_command.execute(entity_type, *args, discord_id=discord_id)
+            consult = self.create_command.execute(entity_type, name, description, discord_id)
 
             await ctx.send(consult)        
 
