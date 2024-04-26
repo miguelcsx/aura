@@ -3,7 +3,7 @@
 import discord
 from discord.ext import (
     commands,
-    tasks
+    tasks,
 )
 from app.business.services.user_service import UserService
 from app.business.services.subject_service import SubjectService
@@ -21,8 +21,6 @@ class Chatbot(commands.Bot):
         # Create commands objects
         self.wikipedia_command = WikipediaCommand()
         self.create_command = CreateCommand()
-
-        self.custom_commands()
 
     async def on_ready(self):
         print(f"Logged in as {self.user.name}")
@@ -44,39 +42,53 @@ class Chatbot(commands.Bot):
         self.user_service.delete_user(user.id)
         print(f"{member.name} has left the server")
 
-    # Function to implement commands to the discord bot
-    def custom_commands(self):
-        @self.command(help=self.wikipedia_command.get_help()["help"], brief=self.wikipedia_command.get_help()["help"], name="wikipedia")
-        async def wikipedia(ctx, sub_command: str, theme: str = None):
-            if sub_command not in ["search", "summary"]:
-                await ctx.send("Invalid command. Use !help wikipedia for more information.")
-                return
-            
-            if theme is None:
-                await ctx.send(self.wikipedia_command.parameter_error)
-                return
-            
-            consult = self.wikipedia_command.execute(sub_command, theme)
+# Function to implement commands to the discord bot
+def custom_commands(bot: Chatbot):
+    
+    # subcommand groups
+    groups: list[discord.app_commands.Group] = list()
+    wiki: discord.app_commands.Group = discord.app_commands.Group(name="wikipedia", description=bot.wikipedia_command.get_help()["brief"])
+    groups.append(wiki)
+    create: discord.app_commands.Group = discord.app_commands.Group(name="create", description=bot.create_command.get_help()["brief"])
+    groups.append(create)
 
-            if isinstance(consult, discord.Embed):
-                await ctx.send(embed=consult)
-            else:
-                await ctx.send(consult)
+    @wiki.command(name="search")
+    async def wikipedia_search(interaction: discord.Interaction, theme: str) -> None:
+        sub_command: str = "search"
 
-        @self.command(help=self.create_command.get_help()["help"], brief=self.create_command.get_help()["help"], name="create")
-        async def create(ctx, entity_type: str, name: str, description: str):
-            if entity_type not in ["subject"]:
-                await ctx.send("Invalid command. Use !help create for more information.")
-                return
+        await interaction.response.send_message(embed=discord.Embed(title=f"Serching {theme} in wikipedia"))
+        consult = bot.wikipedia_command.execute(sub_command, theme)
 
-            if name is None or description is None:
-                await ctx.send(self.create_command.parameter_error)
-                return
+        if isinstance(consult, discord.Embed):
+            await interaction.edit_original_response(embed=consult)
+        else:
+            await interaction.response.send_message(consult)
+    
+    @wiki.command(name="summary")
+    async def wikipedia_summary(interaction: discord.Interaction, theme: str) -> None:
+        sub_command: str = "summary"
 
-            discord_id = ctx.author.id
-            consult = self.create_command.execute(entity_type, name, description, discord_id)
+        await interaction.response.send_message(embed=discord.Embed(title=f"Serching {theme} in wikipedia"))
+        consult = bot.wikipedia_command.execute(sub_command, theme)
 
-            await ctx.send(consult)        
+        if isinstance(consult, discord.Embed):
+            await interaction.edit_original_response(embed=consult)
+        else:
+            await interaction.response.send_message(consult)
+    
+    @create.command(name="subject")
+    async def create_subject(interaction: discord.Interaction, name: str, description: str) -> None:
+
+        discord_id = interaction.user.id
+        consult = bot.create_command.execute("subject", name, description, discord_id)
+
+        await interaction.response.send_message(consult)
+    
+    
+    # add subcommands
+    for i in groups:
+        bot.tree.add_command(i)
+    
 
 
 def setup_bot(discord_token: str) -> None:
@@ -86,4 +98,5 @@ def setup_bot(discord_token: str) -> None:
     
     bot = Chatbot(command_prefix="!", intents=intents, discord_token=discord_token)
 
+    custom_commands(bot)
     return bot
