@@ -1,8 +1,7 @@
 # tests/app/database/test_db.py
 
-import os
+from unittest.mock import patch
 import pytest
-from unittest.mock import patch, Mock
 from app.database.db import create_tables, engine
 
 @pytest.fixture

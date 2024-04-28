@@ -3,6 +3,7 @@
 from app.business.models.user import User
 from app.database.models.user_model import UserModel
 
+
 class UserMapper:
     @staticmethod
     def user_to_model(user: User) -> UserModel:
@@ -13,7 +14,7 @@ class UserMapper:
             created_at=user.created_at,
             subjects=user.subjects
         )
-    
+
     @staticmethod
     def model_to_user(user_model: UserModel) -> User:
         return User(

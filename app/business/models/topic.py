@@ -1,7 +1,8 @@
 # app/business/model/topic.py
 
 class Topic:
-    def __init__(self, id: int = None, title: str = None, content: str = None, subject_id: int = None):
+    def __init__(self, id: int = None, title: str = None,
+                 content: str = None, subject_id: int = None):
         self.id = id
         self.title = title
         self.content = content
