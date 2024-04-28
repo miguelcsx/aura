@@ -1,7 +1,7 @@
 # test/app/business/models/test_user.py
 
-import pytest
 from datetime import datetime
+import pytest
 from app.business.models.user import User
 
 @pytest.fixture
