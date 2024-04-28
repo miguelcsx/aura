@@ -1,8 +1,7 @@
 # tests/app/wikipedia_api/test_scraper.py
 
+from unittest.mock import patch
 import pytest
-from unittest.mock import patch, MagicMock
-from wikipedia.exceptions import PageError, DisambiguationError, WikipediaException
 from app.sources.wiki.wiki_scraper import WikiDocs
 
 @pytest.fixture
@@ -44,7 +43,7 @@ def test_summary(mock_wikipedia_summary, mock_wikipedia_page):
     assert content == 'Summary text'
     assert url == 'https://en.wikipedia.org/wiki/Python_(programming_language)'
 
-def test_summary_exception(mock_wikipedia_summary, mock_wikipedia_page):
+def test_summary_exception(mock_wikipedia_summary):
     mock_wikipedia_summary.side_effect = Exception('Summary error')
     wiki = WikiDocs('Python')
     result = wiki.summary()
