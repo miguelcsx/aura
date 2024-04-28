@@ -6,26 +6,23 @@ suggestion-mode=yes
 
 [MESSAGES CONTROL]
 disable=
+    arguments-differ,
     attribute-defined-outside-init,
-    invalid-name,
-    no-else-return,
     broad-exception-caught,
+    consider-using-assignment-expr,
+    format,
+    invalid-name,
     missing-docstring,
+    no-else-return,
+    possibly-used-before-assignment,
     protected-access,
-    too-few-public-methods,
-    too-many-function-args,
-    too-many-arguments,
-    unexpected-keyword-arg,
-    unknown-option-value,
     redefined-builtin,
     redefined-outer-name,
-    arguments-differ,
-    # handled by black
-    format,
-    # We anticipate #3512 where it will become optional
-    fixme,
-    consider-using-assignment-expr,
-    possibly-used-before-assignment,
+    too-few-public-methods,
+    too-many-arguments,
+    too-many-function-args,
+    unexpected-keyword-arg,
+    unknown-option-value,
 
 
 [BASIC]
