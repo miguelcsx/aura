@@ -1,7 +1,7 @@
 # tests/app/database/models/test_user_model.py
 
-import pytest
 from datetime import datetime
+import pytest
 from app.database.models.user_model import UserModel
 from app.database.models.subject_model import SubjectModel
 

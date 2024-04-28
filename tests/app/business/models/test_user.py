@@ -22,5 +22,5 @@ def test_user_init(sample_user):
     assert sample_user.subjects == ["Math", "Science"]
 
 def test_user_repr(sample_user):
-    expected_repr = "User(id=1, discord_id=123456789, username=test_user, created_at={})".format(sample_user.created_at)
+    expected_repr = f"User(id={sample_user.id}, discord_id={sample_user.discord_id}, username={sample_user.username}, created_at={sample_user.created_at})"
     assert repr(sample_user) == expected_repr

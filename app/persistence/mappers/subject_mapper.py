@@ -3,6 +3,7 @@
 from app.business.models.subject import Subject
 from app.database.models.subject_model import SubjectModel
 
+
 class SubjectMapper:
     @staticmethod
     def subject_to_model(subject: Subject) -> SubjectModel:
@@ -12,7 +13,7 @@ class SubjectMapper:
             description=subject.description,
             user_id=subject.user_id
         )
-    
+
     @staticmethod
     def model_to_subject(subject_model: SubjectModel) -> Subject:
         return Subject(
