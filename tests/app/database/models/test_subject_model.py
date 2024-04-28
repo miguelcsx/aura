@@ -28,7 +28,12 @@ def test_subject_model_creation(sample_subject_model):
 def test_subject_model_representation(sample_subject_model):
     subject = sample_subject_model
 
-    expected_repr = f"Subject(id={subject.id}, name={subject.name}, description={subject.description}, user_id={subject.user_id})"
+    expected_repr = (
+        f"Subject(id={subject.id}, "
+        f"name={subject.name}, "
+        f"description={subject.description}, "
+        f"user_id={subject.user_id})"
+    )
     assert repr(subject) == expected_repr
 
 

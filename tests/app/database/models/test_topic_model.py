@@ -3,6 +3,7 @@
 import pytest
 from app.database.models.topic_model import TopicModel
 
+
 @pytest.fixture
 def sample_topic_model():
     return TopicModel(
@@ -11,12 +12,14 @@ def sample_topic_model():
         subject_id=1
     )
 
+
 def test_topic_model_creation(sample_topic_model):
     topic = sample_topic_model
 
     assert topic.title == "Math"
     assert topic.content == "Mathematics"
     assert topic.subject_id == 1
+
 
 def test_topic_model_representation(sample_topic_model):
     topic = sample_topic_model
