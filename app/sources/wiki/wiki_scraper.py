@@ -1,5 +1,6 @@
 import wikipedia
 
+
 class WikiDocs:
     def __init__(self, theme: str) -> None:
         self.theme = theme
@@ -9,11 +10,10 @@ class WikiDocs:
             search_results = wikipedia.search(self.theme)
             if not search_results:
                 return "No results found"
-            else:
-                return "\n".join(search_results)
-        except Exception as e:
-            return f"An error occurred: {e}"
-    
+            return "\n".join(search_results)
+        except Exception as exception:
+            return f"An error occurred: {exception}"
+
     def summary(self):
         try:
             content = wikipedia.summary(self.theme, auto_suggest=False)

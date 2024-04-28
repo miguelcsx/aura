@@ -1,7 +1,8 @@
 # app/business/models/user.py
 
 class User:
-    def __init__(self, id: int = None, discord_id: str = None, username: str = None, created_at: str = None, subjects: list = []):
+    def __init__(self, id: int = None, discord_id: str = None,
+                 username: str = None, created_at: str = None, subjects: list = None):
         self.id: int = id
         self.discord_id: str | None = discord_id
         self.username: str | None = username

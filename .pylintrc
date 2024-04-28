@@ -1,24 +1,96 @@
-[MASTER]
-additional-imports=
-ignored-packages=
+[MAIN]
+
+# When enabled, pylint would attempt to guess common misconfiguration and emit
+# user-friendly hints instead of false-positive error messages.
+suggestion-mode=yes
 
 [MESSAGES CONTROL]
-disable=missing-module-docstring,missing-function-docstring,missing-class-docstring
+disable=
+    attribute-defined-outside-init,
+    invalid-name,
+    no-else-return,
+    broad-exception-caught,
+    missing-docstring,
+    protected-access,
+    too-few-public-methods,
+    too-many-function-args,
+    too-many-arguments,
+    unexpected-keyword-arg,
+    unknown-option-value,
+    redefined-builtin,
+    redefined-outer-name,
+    arguments-differ,
+    # handled by black
+    format,
+    # We anticipate #3512 where it will become optional
+    fixme,
+    consider-using-assignment-expr,
+    possibly-used-before-assignment,
+
 
 [BASIC]
-indent-string = '    '
-max-line-length = 120
-indent-after-paren = 4
+# Naming style matching correct method names.
+method-naming-style=snake_case
+
+# Naming style matching correct class names.
+class-naming-style=PascalCase
+
+# Regular expression matching correct class names
+class-rgx=[A-Z_][a-zA-Z0-9]+$
+
+
+# Naming style matching correct module names.
+module-naming-style=snake_case
+
+# Naming style matching correct function names.
+function-naming-style=snake_case
+
+# Regular expression matching correct function names
+function-rgx=[a-z_][a-z0-9_]{2,30}$
+
+# Naming style matching correct variable names.
+variable-naming-style=snake_case
+
+# Regular expression matching correct variable names
+variable-rgx=[a-z_][a-z0-9_]{2,30}$
+
+# Naming style matching correct constant names.
+const-naming-style=UPPER_CASE
+
+# Regular expression matching correct constant names
+const-rgx=(([A-Z_][A-Z0-9_]*)|(__.*__))$
+
+# Naming style matching correct attribute names.
+attr-naming-style=snake_case
+
+# Regular expression matching correct attribute names
+attr-rgx=[a-z_][a-z0-9_]{2,}$
+
+# Naming style matching correct argument names.
+argument-naming-style=snake_case
+
+# Regular expression matching correct argument names
+argument-rgx=[a-z_][a-z0-9_]{2,30}$
+
+# Naming style matching correct class attribute names.
+class-attribute-naming-style=any
 
 [FORMAT]
+
+# String used as indentation unit. This is usually "    " (4 spaces) or "\t" (1
+# tab).
+indent-string = '    '
+
+# Number of spaces of indent required inside a hanging or continued line.
+indent-after-paren = 4
+
+# Maximum number of characters on a single line.
+max-line-length = 120
 msg-template = "{path}:{line}: [{msg_id}({symbol}), {obj}] {msg}"
 output-format = colorized
 
 [REPORTS]
 reports = no
-
-[TYPECHECK]
-enable = no
 
 [IMPORTS]
 ignored-modules=

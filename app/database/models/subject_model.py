@@ -6,10 +6,11 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.database.db import Base
 from app.database.models.topic_model import TopicModel
 
+
 class SubjectModel(Base):
     __tablename__ = 'subjects'
 
-    id: Mapped[int] = mapped_column(primary_key = True)
+    id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String)
     description: Mapped[str] = mapped_column(String)
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
