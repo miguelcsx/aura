@@ -1,0 +1,24 @@
+[MASTER]
+additional-imports=
+ignored-packages=
+
+[MESSAGES CONTROL]
+disable=missing-module-docstring,missing-function-docstring,missing-class-docstring
+
+[BASIC]
+indent-string = '    '
+max-line-length = 120
+indent-after-paren = 4
+
+[FORMAT]
+msg-template = "{path}:{line}: [{msg_id}({symbol}), {obj}] {msg}"
+output-format = colorized
+
+[REPORTS]
+reports = no
+
+[TYPECHECK]
+enable = no
+
+[IMPORTS]
+ignored-modules=
