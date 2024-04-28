@@ -1,10 +1,7 @@
 # src/app/discord/bot.py
 
 import discord
-from discord.ext import (
-    commands,
-    tasks,
-)
+from discord.ext import commands
 from app.business.services.user_service import UserService
 from app.business.services.subject_service import SubjectService
 from app.business.services.topic_service import TopicService
