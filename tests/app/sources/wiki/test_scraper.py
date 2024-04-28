@@ -3,7 +3,7 @@
 import pytest
 from unittest.mock import patch, MagicMock
 from wikipedia.exceptions import PageError, DisambiguationError, WikipediaException
-from app.sources.wiki.scraper import WikiDocs
+from app.sources.wiki.wiki_scraper import WikiDocs
 
 @pytest.fixture
 def mock_wikipedia_search():
