@@ -57,9 +57,4 @@ class WikipediaCommand(Commands):
         return embed
 
     def get_help(self):
-        return {
-            "brief": "Access Wikipedia information",
-            "help": "This command allows you to search or get a summary of a topic from Wikipedia. You can use it as follows:\n"
-                    "!wikipedia search <query> - Search for a topic\n"
-                    "!wikipedia summary <topic> - Get a summary of a topic"
-        }
+        return self.parameter_error
