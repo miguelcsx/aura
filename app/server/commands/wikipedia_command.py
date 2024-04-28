@@ -3,7 +3,7 @@
 import discord
 import wikipedia
 from app.server.commands.discord_commands import Commands
-from app.sources.wiki.scraper import WikiDocs
+from app.sources.wiki.wiki_scraper import WikiDocs
 
 class WikipediaCommand(Commands):
 
