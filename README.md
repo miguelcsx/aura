@@ -28,11 +28,8 @@ To use AURA, follow these steps:
 2. Install the required dependencies:
 
     ```bash
-    # Setup ollama for AI integration
-    curl -fsSL https://ollama.com/install.sh | sh
-    
-    # Get the model
-    ollama pull llama3
+    # Change directory to the project folder
+    cd aura/
     
     ```
 

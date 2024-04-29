@@ -15,7 +15,7 @@ class WikipediaCommand(Commands):
         elif sub_command == "summary":
             return self.summary(wiki)
         else:
-            return self.get_help(sub_command)
+            return self.get_help()
 
     def search(self, wiki: WikiDocs) -> discord.Embed:
         search_results = wiki.search()
@@ -43,18 +43,6 @@ class WikipediaCommand(Commands):
                 "Error", "The requested Wikipedia page does not exist.", "")
 
         return self.create_embed(theme, content, url)
-
-    def create_embed(self, title: str, content: str,
-                     url: str) -> discord.Embed:
-        embed = discord.Embed(
-            title=title,
-            description=content,
-            color=discord.Color.blue())
-        embed.set_footer(text=url)
-        if url:
-            embed.add_field(name="URL", value=url)
-
-        return embed
 
     def get_help(self):
         return {
