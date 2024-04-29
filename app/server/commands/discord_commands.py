@@ -1,4 +1,5 @@
-# app/server/commands/discord_commands.py
+"""app/server/commands/discord_commands.py
+Module docstring ..."""
 
 from abc import (
     ABC,
@@ -6,6 +7,7 @@ from abc import (
 )
 from app.business.services.user_service import UserService
 from app.business.services.subject_service import SubjectService
+
 
 class Commands(ABC):
 

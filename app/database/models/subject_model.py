@@ -1,5 +1,6 @@
 # app/database/models/subject_model.py
 
+
 from typing import List
 from sqlalchemy import ForeignKey, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -7,7 +8,7 @@ from app.database.db import Base
 from app.database.models.topic_model import TopicModel
 
 class SubjectModel(Base):
-    __tablename__ = 'subjects'
+    __tablename__: str = 'subjects'
 
     id: Mapped[int] = mapped_column(primary_key = True)
     name: Mapped[str] = mapped_column(String)

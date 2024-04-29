@@ -1,23 +1,28 @@
-# app/persistence/mappers/subject_mapper.py
+"""app/persistence/mappers/subject_mapper.py
+Module docstring ..."""
 
 from app.business.models.subject import Subject
 from app.database.models.subject_model import SubjectModel
+from app.persistence.mappers.mapper import Mapper
 
-class SubjectMapper:
+
+class SubjectMapper(Mapper):
+    """Class docstring"""
+
     @staticmethod
-    def subject_to_model(subject: Subject) -> SubjectModel:
+    def element_to_model(element: Subject) -> SubjectModel:
         return SubjectModel(
-            id=subject.id,
-            name=subject.name,
-            description=subject.description,
-            user_id=subject.user_id
+            id=element.id,
+            name=element.name,
+            description=element.description,
+            user_id=element.user_id,
         )
-    
+
     @staticmethod
-    def model_to_subject(subject_model: SubjectModel) -> Subject:
+    def element_to_object(element: SubjectModel) -> Subject:
         return Subject(
-            id=subject_model.id,
-            name=subject_model.name,
-            description=subject_model.description,
-            user_id=subject_model.user_id
+            id=element.id,
+            name=element.name,
+            description=element.description,
+            user_id=element.user_id,
         )

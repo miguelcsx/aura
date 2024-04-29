@@ -13,7 +13,7 @@ DB_PATH = os.path.join(BASE_DIR, "../../data/db/aura.db")
 engine = create_engine(f"sqlite:///{DB_PATH}", connect_args={'check_same_thread': False})
 
 # Create a session factory
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+SessionLocal: sessionmaker = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 # Base class for declarative class definitions
 Base = declarative_base()
