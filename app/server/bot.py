@@ -6,6 +6,7 @@ from app.business.services.user_service import UserService
 from app.business.services.topic_service import TopicService
 from app.server.commands.wikipedia_command import WikipediaCommand
 from app.server.commands.management_command import CreateCommand
+from app.server.commands.ai_command import AICommand
 
 
 class Chatbot(commands.Bot):
@@ -19,6 +20,7 @@ class Chatbot(commands.Bot):
         # Create commands objects
         self.wikipedia_command = WikipediaCommand()
         self.create_command = CreateCommand()
+        self.ai_command = AICommand()
 
     async def on_ready(self):
         print(f"Logged in as {self.user.name}")
@@ -40,19 +42,37 @@ class Chatbot(commands.Bot):
         self.user_service.delete_user(user.id)
         print(f"{member.name} has left the server")
 
+
 # Function to implement commands to the discord bot
-
-
 def custom_commands(bot: Chatbot):
 
     # subcommand groups
     groups: list[discord.app_commands.Group] = []
+    # wikipedia group
     wiki: discord.app_commands.Group = discord.app_commands.Group(
         name="wikipedia", description=bot.wikipedia_command.get_help()["brief"])
     groups.append(wiki)
+    # create group
     create: discord.app_commands.Group = discord.app_commands.Group(
         name="create", description=bot.create_command.get_help()["brief"])
     groups.append(create)
+    # ai group
+    ai: discord.app_commands.Group = discord.app_commands.Group(
+        name="ai", description=bot.ai_command.get_help()["brief"])
+    groups.append(ai)
+
+    @ai.command(name="chat")
+    async def ai_chat(
+            interaction: discord.Interaction, prompt: str) -> None:
+        sub_command: str = "chat"
+
+        await interaction.response.send_message(embed=discord.Embed(title="Generating text from the AI"))
+        consult = bot.ai_command.execute(sub_command, prompt)
+
+        if isinstance(consult, discord.Embed):
+            await interaction.edit_original_response(embed=consult)
+        else:
+            await interaction.response.send_message(consult)
 
     @wiki.command(name="search")
     async def wikipedia_search(
