@@ -35,7 +35,7 @@ class Chatbot(commands.Bot):
 
     async def on_member_remove(self, member):
         user = self.user_service.get_user_by_discord_id(member.id)
-        self.topic_service.delete_topic_by_subject_id(user.id)
+        self.topic_service.delete_element_by_object_id(user.id)
         self.subject_service.delete_subjects_by_user_id(user.id)
         self.user_service.delete_user(user.id)
         print(f"{member.name} has left the server")

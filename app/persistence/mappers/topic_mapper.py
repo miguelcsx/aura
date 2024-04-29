@@ -1,24 +1,28 @@
-# app/persistence/mappers/topic_mapper.py
+"""app/persistence/mappers/topic_mapper.py
+Module docstring ..."""
 
 from app.business.models.topic import Topic
 from app.database.models.topic_model import TopicModel
+from app.persistence.mappers.mapper import Mapper
 
 
-class TopicMapper:
+class TopicMapper(Mapper):
+    """Class docstring"""
+
     @staticmethod
-    def topic_to_model(topic: Topic) -> TopicModel:
+    def element_to_model(element: Topic) -> TopicModel:
         return TopicModel(
-            id=topic.id,
-            title=topic.title,
-            content=topic.content,
-            subject_id=topic.subject_id
+            id=element.id,
+            title=element.title,
+            content=element.content,
+            subject_id=element.subject_id,
         )
 
     @staticmethod
-    def model_to_topic(topic_model: TopicModel) -> Topic:
+    def element_to_object(element: TopicModel) -> Topic:
         return Topic(
-            id=topic_model.id,
-            title=topic_model.title,
-            content=topic_model.content,
-            subject_id=topic_model.subject_id
+            id=element.id,
+            title=element.title,
+            content=element.content,
+            subject_id=element.subject_id,
         )

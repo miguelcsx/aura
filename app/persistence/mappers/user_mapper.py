@@ -1,26 +1,30 @@
-# app/persistence/mappers/user_mapper.py
+"""app/persistence/mappers/user_mapper.py
+Module docstring ..."""
 
 from app.business.models.user import User
 from app.database.models.user_model import UserModel
+from app.persistence.mappers.mapper import Mapper
 
 
-class UserMapper:
+class UserMapper(Mapper):
+    """Class docstring"""
+
     @staticmethod
-    def user_to_model(user: User) -> UserModel:
+    def element_to_model(element: User) -> UserModel:
         return UserModel(
-            id=user.id,
-            discord_id=user.discord_id,
-            username=user.username,
-            created_at=user.created_at,
-            subjects=user.subjects
+            id=element.id,
+            discord_id=element.discord_id,
+            username=element.username,
+            created_at=element.created_at,
+            subjects=element.subjects,
         )
 
     @staticmethod
-    def model_to_user(user_model: UserModel) -> User:
+    def element_to_object(element: UserModel) -> User:
         return User(
-            id=user_model.id,
-            discord_id=user_model.discord_id,
-            username=user_model.username,
-            created_at=user_model.created_at,
-            subjects=user_model.subjects
+            id=element.id,
+            discord_id=element.discord_id,
+            username=element.username,
+            created_at=element.created_at,
+            subjects=element.subjects,
         )
