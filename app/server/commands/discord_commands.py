@@ -17,7 +17,7 @@ class Commands(ABC):
         self.subject_service = SubjectService()
 
     @abstractmethod
-    def execute(self, *args, **kwargs):
+    def execute(self):
         raise NotImplementedError("Subclasses must implement this method")
 
     @abstractmethod
