@@ -26,7 +26,5 @@ class CreateCommand(Commands):
     def get_help(self):
         return {
             "brief": "Create a new entity",
-            "help": "This command allows you to create a new entity. You can use it as follows:\n"
-                    "!create subject <name> <description> - Create a new subject\n"
-                    "!create topic <name> <description> <subject_id> - Create a new topic"
+            "help": "This command allows you to create a new entity."
         }
