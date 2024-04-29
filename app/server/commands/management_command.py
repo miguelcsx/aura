@@ -1,4 +1,5 @@
-# app/server/commands/management_commands.py
+"""app/server/commands/management_commands.py
+Module docstring ..."""
 
 from app.server.commands.discord_commands import Commands
 from app.business.services.user_service import UserService
@@ -21,7 +22,7 @@ class CreateCommand(Commands):
         if entity_type == "subject":
             return self.create_subject(name, description, discord_id)
         else:
-            return self.get_help(entity_type)
+            return self.get_help()[entity_type]
 
     def get_help(self):
         return {
