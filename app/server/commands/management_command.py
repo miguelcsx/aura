@@ -1,5 +1,4 @@
-"""app/server/commands/management_commands.py
-Module docstring ..."""
+# app/server/commands/management_commands.py
 
 from app.server.commands.discord_commands import Commands
 from app.business.services.user_service import UserService

@@ -1,5 +1,4 @@
-"""app/server/commands/discord_commands.py
-Module docstring ..."""
+# app/server/commands/discord_commands.py
 
 from abc import (
     ABC,
