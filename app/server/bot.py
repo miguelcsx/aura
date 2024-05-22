@@ -4,9 +4,11 @@ import discord
 from discord.ext import commands
 from app.business.services.user_service import UserService
 from app.business.services.topic_service import TopicService
+from app.server.commands.command_tree import custom_commands
 from app.server.commands.wikipedia_command import WikipediaCommand
 from app.server.commands.management_command import CreateCommand
 from app.server.commands.ai_command import AICommand
+from app.server.events.study_session import StudySessionManager
 
 
 class Chatbot(commands.Bot):
@@ -21,6 +23,9 @@ class Chatbot(commands.Bot):
         self.wikipedia_command = WikipediaCommand()
         self.create_command = CreateCommand()
         self.ai_command = AICommand()
+
+        # Create study session manager
+        self.study_session_manager = StudySessionManager()
 
     async def on_ready(self):
         print(f"Logged in as {self.user.name}")
@@ -42,77 +47,8 @@ class Chatbot(commands.Bot):
         self.user_service.delete_user(user.id)
         print(f"{member.name} has left the server")
 
-
-# Function to implement commands to the discord bot
-def custom_commands(bot: Chatbot):
-
-    # subcommand groups
-    groups: list[discord.app_commands.Group] = []
-    # wikipedia group
-    wiki: discord.app_commands.Group = discord.app_commands.Group(
-        name="wikipedia", description=bot.wikipedia_command.get_help()["brief"])
-    groups.append(wiki)
-    # create group
-    create: discord.app_commands.Group = discord.app_commands.Group(
-        name="create", description=bot.create_command.get_help()["brief"])
-    groups.append(create)
-    # ai group
-    ai: discord.app_commands.Group = discord.app_commands.Group(
-        name="ai", description=bot.ai_command.get_help()["brief"])
-    groups.append(ai)
-
-    @ai.command(name="chat")
-    async def ai_chat(
-            interaction: discord.Interaction, prompt: str) -> None:
-        sub_command: str = "chat"
-
-        await interaction.response.send_message(embed=discord.Embed(title="Generating text from the AI"))
-        consult = bot.ai_command.execute(sub_command, prompt)
-
-        if isinstance(consult, discord.Embed):
-            await interaction.edit_original_response(embed=consult)
-        else:
-            await interaction.response.send_message(consult)
-
-    @wiki.command(name="search")
-    async def wikipedia_search(
-            interaction: discord.Interaction, theme: str) -> None:
-        sub_command: str = "search"
-
-        await interaction.response.send_message(embed=discord.Embed(title=f"Serching {theme} in wikipedia"))
-        consult = bot.wikipedia_command.execute(sub_command, theme)
-
-        if isinstance(consult, discord.Embed):
-            await interaction.edit_original_response(embed=consult)
-        else:
-            await interaction.response.send_message(consult)
-
-    @wiki.command(name="summary")
-    async def wikipedia_summary(
-            interaction: discord.Interaction, theme: str) -> None:
-        sub_command: str = "summary"
-
-        await interaction.response.send_message(embed=discord.Embed(title=f"Serching {theme} in wikipedia"))
-        consult = bot.wikipedia_command.execute(sub_command, theme)
-
-        if isinstance(consult, discord.Embed):
-            await interaction.edit_original_response(embed=consult)
-        else:
-            await interaction.response.send_message(consult)
-
-    @create.command(name="subject")
-    async def create_subject(
-            interaction: discord.Interaction, name: str, description: str) -> None:
-
-        discord_id = interaction.user.id
-        consult = bot.create_command.execute(
-            "subject", name, description, discord_id)
-
-        await interaction.response.send_message(consult)
-
-    # add subcommands
-    for i in groups:
-        bot.tree.add_command(i)
+    async def on_interaction(self, interaction):
+        await self.study_session_manager.track_command(interaction)
 
 
 def setup_bot(discord_token: str) -> None:
