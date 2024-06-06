@@ -30,7 +30,6 @@ To use AURA, follow these steps:
     ```bash
     # Change directory to the project folder
     cd aura/
-    
     ```
 
     ```bash
@@ -54,4 +53,3 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## Support
 For questions, issues, or suggestions, please [open an issue](https://github.com/miguelcsx/aura/issues).
-
