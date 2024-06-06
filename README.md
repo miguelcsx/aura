@@ -2,6 +2,8 @@
 
 AURA is a chatbot and virtual study assistant designed to facilitate and enhance the learning process at an educational level. The primary goal of AURA is to leverage the principles of the memory curve and spaced repetition to help students retain information more effectively.
 
+![Image](resources/images/logo.png)
+
 ## Key Features
 
 1. **Customized Topics:** AURA allows users to select topics or subjects they want to focus on, ensuring a personalized learning experience.
