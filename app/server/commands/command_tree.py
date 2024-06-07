@@ -61,17 +61,49 @@ def _ai_commands(bot):
         description=bot.ai_command.get_help()["brief"]
     )
 
-    @ai.command(name="chat")
+    @ai.command(name="ask")
     async def ai_chat(
         interaction: discord.Interaction, prompt: str
     ) -> None:
-        sub_command = "chat"
+        sub_command = "ask"
         await interaction.response.send_message(embed=discord.Embed(title="Generating text from the AI"))
         consult = bot.ai_command.execute(sub_command, prompt)
         if isinstance(consult, discord.Embed):
             await interaction.edit_original_response(embed=consult)
         else:
             await interaction.response.send_message(consult)
+
+    @ai.command(name="explain")
+    async def ai_explain(
+        interaction: discord.Interaction, topic: str
+    ) -> None:
+        sub_command = "explain"
+        await interaction.response.send_message(embed=discord.Embed(title=f"Explaining {topic}"))
+        consult = bot.ai_command.execute(sub_command, topic)
+        if isinstance(consult, discord.Embed):
+            await interaction.edit_original_response(embed=consult)
+        else:
+            await interaction.response.send_message(consult)
+
+    @ai.command(name="summarize")
+    async def ai_summarize(
+        interaction: discord.Interaction, text: str, type: str
+    ) -> None:
+        sub_command = "summarize"
+        await interaction.response.send_message(embed=discord.Embed(title="Summarizing text"))
+        consult = bot.ai_command.execute(sub_command, text, type)
+        if isinstance(consult, discord.Embed):
+            await interaction.edit_original_response(embed=consult)
+        else:
+            await interaction.response.send_message(consult)
+
+    @ai.command(name="mindmap")
+    async def ai_mindmap(
+        interaction: discord.Interaction, text: str
+    ) -> None:
+        sub_command = "mindmap"
+        await interaction.response.send_message(embed=discord.Embed(title="Creating mind map"))
+        await bot.ai_command.execute(sub_command, text, interaction.user.id)
 
     bot.tree.add_command(ai)
 
