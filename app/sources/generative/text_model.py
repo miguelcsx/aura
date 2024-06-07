@@ -24,6 +24,6 @@ class TextModel:
         return result.content
 
     def create_mindmap(self, text: str) -> str:
-        prompt = f"Create a markdown mind map from the following text: {text} to use with markmap"
+        prompt = f"Create a markdown contextualizing the main ideas to create a mind map for the following text: {text}"
         result = self.llm.invoke(prompt)
         return result.content
