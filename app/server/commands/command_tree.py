@@ -103,7 +103,9 @@ def _ai_commands(bot):
     ) -> None:
         sub_command = "mindmap"
         await interaction.response.send_message(embed=discord.Embed(title="Creating mind map"))
-        await bot.ai_command.execute(sub_command, text, interaction.user.id)
+        path = await bot.ai_command.execute(sub_command, text, interaction.user.id)
+        await interaction.user.send(file=discord.File(path))
+        await interaction.followup.send("Mind map created.")
 
     bot.tree.add_command(ai)
 
