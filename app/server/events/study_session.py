@@ -84,9 +84,11 @@ def format_time(minutes: float) -> str:
 
     # Extract days, hours, minutes, and seconds
     days = td.days
-    hours = td.seconds // 3600
-    minutes = (td.seconds % 3600) // 60
-    seconds = td.seconds % 60
+    remaining_seconds = td.seconds
+    hours = remaining_seconds // 3600
+    remaining_seconds %= 3600
+    minutes = remaining_seconds // 60
+    seconds = remaining_seconds % 60
 
     # Build the formatted string
     parts = []

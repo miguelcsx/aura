@@ -47,7 +47,11 @@ class AICommand(Commands):
             file.write(response)
 
         # Create the visual mind map
-        run_npx_command("markmap-cli", "--no-open", "--no-toolbar", "--offline", "-o", mindmap_path, f"{mindmap_path}.html")
+        run_npx_command("markmap-cli", "--no-open", "--no-toolbar", mindmap_path, "--offline", "-o", f"{mindmap_path}.html")
+
+        os.remove(mindmap_path)
+
+        return f"{mindmap_path}.html"
 
     def get_help(self):
         return {
