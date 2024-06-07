@@ -3,6 +3,26 @@
 import discord
 
 
+def _video_commands(bot):
+    video = discord.app_commands.Group(
+        name="video",
+        description="Access YouTube information"
+    )
+
+    @video.command(name="search")
+    async def video_search(
+        interaction: discord.Interaction, theme: str
+    ) -> None:
+        sub_command = "search"
+        await interaction.response.send_message(embed=discord.Embed(title=f"Searching {theme} in YouTube"))
+        consult = bot.video_command.execute(sub_command, theme)
+        if isinstance(consult, discord.Embed):
+            await interaction.edit_original_response(embed=consult)
+        else:
+            await interaction.response.send_message(consult)
+
+    bot.tree.add_command(video)
+
 def _wikipedia_commands(bot):
     wiki = discord.app_commands.Group(
         name="wikipedia",
@@ -132,6 +152,7 @@ def _study_commands(bot):
 
 
 def custom_commands(bot):
+    _video_commands(bot)
     _wikipedia_commands(bot)
     _create_commands(bot)
     _ai_commands(bot)

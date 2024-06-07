@@ -9,7 +9,7 @@ from app.server.commands.wikipedia_command import WikipediaCommand
 from app.server.commands.management_command import CreateCommand
 from app.server.commands.ai_command import AICommand
 from app.server.events.study_session import StudySessionManager
-
+from app.server.commands.video_command import VideoCommand
 
 class Chatbot(commands.Bot):
     def __init__(self, command_prefix: str,
@@ -23,6 +23,7 @@ class Chatbot(commands.Bot):
         self.wikipedia_command = WikipediaCommand()
         self.create_command = CreateCommand()
         self.ai_command = AICommand()
+        self.video_command = VideoCommand()
 
         # Create study session manager
         self.study_session_manager = StudySessionManager()
