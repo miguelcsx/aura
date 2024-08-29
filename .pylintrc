@@ -13,7 +13,6 @@ disable=
     format,
     invalid-name,
     missing-docstring,
-    no-else-return,
     possibly-used-before-assignment,
     protected-access,
     redefined-builtin,
