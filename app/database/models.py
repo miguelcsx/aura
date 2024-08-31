@@ -1,14 +1,18 @@
 # app/database/models.py
 
+from enum import Enum
 from sqlalchemy import (
     Column,
     Integer,
     String,
     ForeignKey,
-    Text,
 )
 from sqlalchemy.orm import relationship
 from app.database.session import Base
+
+
+class ActivityType(Enum):
+    question = "question"
 
 
 class User(Base):
@@ -21,57 +25,10 @@ class User(Base):
     created_at = Column(String)
     updated_at = Column(String)
 
-    courses = relationship("Course", back_populates="creator")
-    topics = relationship("Topic", back_populates="created_by")
     study_sessions = relationship("StudySession", back_populates="user")
-
-
-class Course(Base):
-    __tablename__ = "courses"
-
-    id: Column = Column(Integer, primary_key=True, index=True)
-    title: Column = Column(String, index=True)
-    description: Column = Column(Text)
-    creator_id: Column = Column(Integer, ForeignKey("users.id"))
-    created_at = Column(String)
-    updated_at = Column(String)
-
-    creator = relationship("User", back_populates="courses")
-    topics = relationship("Topic", back_populates="course")
-
-
-class Topic(Base):
-    __tablename__ = "topics"
-
-    id: Column = Column(Integer, primary_key=True, index=True)
-    title: Column = Column(String, index=True)
-    description: Column = Column(Text)
-    course_id: Column = Column(Integer, ForeignKey("courses.id"), nullable=True)
-    creator_id: Column = Column(Integer, ForeignKey("users.id"))
-    created_at: Column = Column(String)
-    updated_at: Column = Column(String)
-
-    course = relationship("Course", back_populates="topics")
-    created_by = relationship("User", back_populates="topics")
-    resources = relationship("Resource", back_populates="topic")
-    study_sessions = relationship("StudySession", back_populates="topic")
-
-
-class Resource(Base):
-    __tablename__ = "resources"
-
-    id: Column = Column(Integer, primary_key=True, index=True)
-    title: Column = Column(String, index=True)
-    description: Column = Column(Text)
-    type_of: Column = Column(String)
-    url: Column = Column(String)
-    topic_id: Column = Column(Integer, ForeignKey("topics.id"))
-    creator_id: Column = Column(Integer, ForeignKey("users.id"))
-    created_at: Column = Column(String)
-    updated_at: Column = Column(String)
-
-    topic = relationship("Topic", back_populates="resources")
-    creator = relationship("User")
+    activities = relationship("Activity", back_populates="user")
+    questions = relationship("Question", back_populates="user")
+    answers = relationship("Answer", back_populates="user")
 
 
 class StudySession(Base):
@@ -79,10 +36,55 @@ class StudySession(Base):
 
     id: Column = Column(Integer, primary_key=True, index=True)
     user_id: Column = Column(Integer, ForeignKey("users.id"))
-    topic_id: Column = Column(Integer, ForeignKey("topics.id"))
     start_time: Column = Column(String)
     end_time: Column = Column(String)
-    technique: Column = Column(String)
 
     user = relationship("User", back_populates="study_sessions")
-    topic = relationship("Topic", back_populates="study_sessions")
+    activities = relationship("Activity", back_populates="study_session")
+
+
+class Activity(Base):
+    __tablename__ = "activities"
+
+    id: Column = Column(Integer, primary_key=True, index=True)
+    user_id: Column = Column(Integer, ForeignKey("users.id"))
+    study_session_id: Column = Column(Integer, ForeignKey("study_sessions.id"))
+    type: Column = Column(Enum(ActivityType), nullable=False)
+    activity: Column = Column(String)
+    created_at = Column(String)
+
+    user = relationship("User", back_populates="activities")
+    study_session = relationship("StudySession", back_populates="activities")
+
+    question = relationship("Question", back_populates="activity", uselist=False)
+
+
+class Question(Base):
+    __tablename__ = "questions"
+
+    id: Column = Column(Integer, primary_key=True, index=True)
+    user_id: Column = Column(Integer, ForeignKey("users.id"))
+    activity_id: Column = Column(Integer, ForeignKey("activities.id"))
+    question: Column = Column(String)
+
+    user = relationship("User", back_populates="questions")
+    answers = relationship("Answer", back_populates="question")
+    activity = relationship("Activity", back_populates="question")
+
+
+class Answer(Base):
+    __tablename__ = "answers"
+
+    id: Column = Column(Integer, primary_key=True, index=True)
+    user_id: Column = Column(Integer, ForeignKey("users.id"))
+    question_id: Column = Column(Integer, ForeignKey("questions.id"))
+    answer: Column = Column(String)
+
+    user = relationship("User", back_populates="answers")
+    question = relationship("Question", back_populates="answers")
+    parent_answer = relationship(
+        "Answer", remote_side=[id], back_populates="child_answers"
+    )
+    child_answers = relationship(
+        "Answer", back_populates="parent_answer", cascade="all, delete-orphan"
+    )

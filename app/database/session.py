@@ -20,9 +20,7 @@ engine: Engine = create_engine(
 )
 
 SessionLocal: sessionmaker = sessionmaker(
-    autocommit=False,
-    autoflush=False,
-    bind=engine
+    autocommit=False, autoflush=False, bind=engine
 )
 
 Base = declarative_base()
