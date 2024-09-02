@@ -1,21 +1,24 @@
 # AURA - Adaptative Utility and Routine Assistant
 
-AURA is a chatbot and virtual study assistant designed to facilitate and enhance the learning process at an educational level. The primary goal of AURA is to leverage the principles of the memory curve and spaced repetition to help students retain information more effectively.
+AURA is an innovative API designed to revolutionize the way students learn. It provides a comprehensive platform where students can access a wide range of educational resources, receive personalized recommendations, and track their progress. AURA is built to enhance the learning experience by offering targeted support, adaptive learning routines, and intelligent assistance.
 
 ![Image](resources/images/logo.png)
 
 ## Key Features
 
-1. **Customized Topics:** AURA allows users to select topics or subjects they want to focus on, ensuring a personalized learning experience.
-2. **Topic Review System:** Through a conversational interface, AURA presents users with questions or prompts related to their chosen topics, helping them review and reinforce their knowledge.
-3. **Spaced Repetition:** AURA implements a topic spacing system, which ensures that topics are revisited at optimal intervals, maximizing long-term retention and memory consolidation.
-4. **Grading and Feedback:** AURA provides a grading system to assess the user's understanding and offers constructive feedback for improvement.
-5. **Data Management:** Users can manually enter or import data (e.g., notes, flashcards, etc.) into AURA, enabling the application to tailor the learning experience based on the provided information.
-6. **Multi-Language Support:** Initially, AURA will support English and Spanish, with the potential for additional language support in the future.
-7. **Cross-Platform Compatibility:** AURA will be available for both Linux and Windows operating systems.
-8. **Graphical User Interface (GUI):** AURA will feature a user-friendly graphical interface for seamless interaction and navigation.
-9. **External API Integration:** AURA will integrate with external APIs, such as calendar and notification services, to provide reminders for upcoming exams and study sessions, as well as study timers.
-10. **Statistical Reports and Insights:** AURA will generate statistical reports and offer suggestions for improvement based on the user's performance and study habits.
+1. **Unified Learning Hub**: Unified Learning Hub: Access all possible educational resources from a single platform, eliminating the need to juggle multiple tabs or applications. AURA integrates various content types like videos, flashcards, and quizzes to provide a well-rounded learning experience.
+
+2. **Personalized Learning Assistance**: AURA supports students during their learning journey by presenting tailored content, reinforcing knowledge through interactive elements such as videos, flashcards, and questions.
+
+3. **Performance Tracking**: Continuously measures student performance to provide actionable insights and improve recommendations, ensuring an effective learning path.
+
+4. **Question Handling and Support**: When a student has a question, AURA offers a list of related questions to provide immediate assistance. If further help is needed, AURA utilizes a tiered support system:
+
+      - **LLM Support**: If related questions don’t resolve the query, AURA employs a Language Learning Model (LLM) to answer.
+      - **Advisor Connection**: If the LLM's response is insufficient, AURA connects the student with an advisor.
+      - **Expert Teacher Assistance**: As a last resort, AURA connects the student with a subject matter expert to ensure the question is thoroughly resolved.
+
+5. **Adaptive Learning Pathways**: Monitors student performance across various subjects, offering diverse learning strategies and continuously adapting to improve the student's learning process.
 
 ## Usage
 
@@ -41,12 +44,8 @@ To use AURA, follow these steps:
 3. Run the application:
 
     ```bash
-    python -m app.main
+    python main.py
     ```
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
 
 ## Acknowledgements
 -  This project was inspired by the desire to improve educational outcomes through technology.
@@ -55,3 +54,7 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## Support
 For questions, issues, or suggestions, please [open an issue](https://github.com/miguelcsx/aura/issues).
+
+
+## License
+This project is licensed under the [MIT License](LICENSE).
