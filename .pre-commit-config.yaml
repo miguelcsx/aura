@@ -13,3 +13,9 @@ repos:
         language: system
         pass_filenames: false
 
+      - id: format-yaml
+        name: Format YAML Files
+        entry: yamlfmt
+        language: python
+        types: [yaml]
+        files: \.(yml|yaml)$
