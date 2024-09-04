@@ -81,7 +81,7 @@ indent-string = '    '
 indent-after-paren = 4
 
 # Maximum number of characters on a single line.
-max-line-length = 120
+max-line-length = 80
 msg-template = "{path}:{line}: [{msg_id}({symbol}), {obj}] {msg}"
 output-format = colorized
 
