@@ -1,5 +1,3 @@
-# app/schemas/activity.py
-
 from typing import Optional
 from enum import Enum
 from datetime import datetime
@@ -31,11 +29,12 @@ class ActivityInDBBase(ActivityBase):
     study_session_id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
+        arbitrary_types_allowed = True
 
 
 class Activity(ActivityInDBBase):
-    question: Optional["Question"] = None
+    question: Optional[Question] = None
 
 
 class ActivityInDB(ActivityInDBBase):
