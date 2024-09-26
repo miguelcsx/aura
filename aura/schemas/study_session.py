@@ -1,6 +1,8 @@
+# aura/schemas/study_session.py
+
 from typing import List, Optional
 from datetime import datetime
-from pydantic import BaseModel
+from pydantic import ConfigDict, BaseModel
 from aura.database.models import Activity
 
 
@@ -20,10 +22,7 @@ class StudySessionUpdate(StudySessionBase):
 class StudySessionInDBBase(StudySessionBase):
     id: int
     user_id: int
-
-    class Config:
-        from_attributes = True
-        arbitrary_types_allowed = True
+    model_config = ConfigDict(from_attributes=True, arbitrary_types_allowed=True)
 
 
 class StudySession(StudySessionInDBBase):

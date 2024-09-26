@@ -1,13 +1,15 @@
+# aura/schemas/user.py
+
 from typing import List, Optional
 from datetime import datetime
-from pydantic import BaseModel
-from aura.database.models import Activity, Answer, Question, StudySession
+from pydantic import ConfigDict, BaseModel
+from aura.database.models import UserRole, Activity, Answer, Question, StudySession
 
 
 class UserBase(BaseModel):
     username: str
     email: str
-    role: str
+    role: UserRole
 
 
 class UserCreate(UserBase):
@@ -22,10 +24,7 @@ class UserInDBBase(UserBase):
     id: int
     created_at: datetime
     updated_at: datetime
-
-    class Config:
-        from_attributes = True
-        arbitrary_types_allowed = True
+    model_config = ConfigDict(from_attributes=True, arbitrary_types_allowed=True)
 
 
 class User(UserInDBBase):

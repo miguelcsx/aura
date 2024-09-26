@@ -9,7 +9,7 @@ cd discord || {
 # Set up Rust environment (assuming Rust is already installed)
 rust_version="1.57.0"
 
-# Optionally install Rustup (uncomment if needed)
+# Optionally install Rustup
 # curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 
 # Install Rust components
@@ -22,4 +22,4 @@ cargo check --all
 cargo fmt --all -- --check
 
 # Run Clippy
-cargo clippy --all -- -D warningss
+cargo clippy --all -- -D warnings

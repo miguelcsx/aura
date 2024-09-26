@@ -1,12 +1,9 @@
+# aura/schemas/activity.py
+
 from typing import Optional
-from enum import Enum
 from datetime import datetime
-from pydantic import BaseModel
-from aura.database.models import Question
-
-
-class ActivityType(str, Enum):
-    question = "question"
+from pydantic import ConfigDict, BaseModel
+from aura.database.models import ActivityType, Question
 
 
 class ActivityBase(BaseModel):
@@ -27,10 +24,7 @@ class ActivityInDBBase(ActivityBase):
     id: int
     user_id: int
     study_session_id: int
-
-    class Config:
-        from_attributes = True
-        arbitrary_types_allowed = True
+    model_config = ConfigDict(from_attributes=True, arbitrary_types_allowed=True)
 
 
 class Activity(ActivityInDBBase):

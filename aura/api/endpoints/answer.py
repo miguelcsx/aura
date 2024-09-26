@@ -23,14 +23,14 @@ from aura.repositories.answer_repository import (
 router = APIRouter()
 
 
-@router.post("/answers/", response_model=AnswerInDBBase)
+@router.post("/answer/", response_model=AnswerInDBBase)
 def create_answer_endpoint(
     answer: AnswerCreate, db: Session = Depends(get_db)
 ) -> AnswerInDBBase:
     return create_answer(db, answer)
 
 
-@router.get("/answers/{answer_id}", response_model=AnswerInDBBase)
+@router.get("/answer/{answer_id}", response_model=AnswerInDBBase)
 def read_answer(answer_id: int, db: Session = Depends(get_db)) -> AnswerInDBBase:
     answer = get_answer(db, answer_id)
     if answer is None:
@@ -38,14 +38,14 @@ def read_answer(answer_id: int, db: Session = Depends(get_db)) -> AnswerInDBBase
     return answer
 
 
-@router.get("/answers/", response_model=list[AnswerInDBBase])
+@router.get("/answer/", response_model=list[AnswerInDBBase])
 def read_answers(
     skip: int = 0, limit: int = 10, db: Session = Depends(get_db)
 ) -> list[AnswerInDBBase]:
     return get_answers(db, skip, limit)
 
 
-@router.put("/answers/{answer_id}", response_model=AnswerInDBBase)
+@router.put("/answer/{answer_id}", response_model=AnswerInDBBase)
 def update_answer_endpoint(
     answer_id: int, answer: AnswerUpdate, db: Session = Depends(get_db)
 ) -> AnswerInDBBase:
@@ -55,7 +55,7 @@ def update_answer_endpoint(
     return update_answer(db, answer_id, answer.model_dump())
 
 
-@router.delete("/answers/{answer_id}", response_model=AnswerInDBBase)
+@router.delete("/answer/{answer_id}", response_model=AnswerInDBBase)
 def delete_answer_endpoint(
     answer_id: int, db: Session = Depends(get_db)
 ) -> AnswerInDBBase:
