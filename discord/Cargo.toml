@@ -1,0 +1,12 @@
+[package]
+name = "discord"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+clap = "4.5.18"
+dotenv = "0.15.0"
+once_cell = "1.19.0"
+reqwest = "0.12.7"
+serenity = "0.12.2"
+tokio = "1.40.0"
