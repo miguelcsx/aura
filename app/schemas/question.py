@@ -1,7 +1,4 @@
-from typing import (
-    Optional,
-    List,
-)
+from typing import Optional, List
 from pydantic import BaseModel
 from app.database.models import Answer
 
@@ -24,11 +21,12 @@ class QuestionInDBBase(QuestionBase):
     activity_id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
+        arbitrary_types_allowed = True
 
 
 class Question(QuestionInDBBase):
-    answers: Optional[List["Answer"]] = []
+    answers: Optional[List[Answer]] = None
 
 
 class QuestionInDB(QuestionInDBBase):

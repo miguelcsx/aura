@@ -1,9 +1,4 @@
-# app/schemas/user.py
-
-from typing import (
-    List,
-    Optional,
-)
+from typing import List, Optional
 from datetime import datetime
 from pydantic import BaseModel
 from app.database.models import Activity, Answer, Question, StudySession
@@ -29,11 +24,12 @@ class UserInDBBase(UserBase):
     updated_at: datetime
 
     class Config:
-        orm_mode = True
+        from_attributes = True
+        arbitrary_types_allowed = True
 
 
 class User(UserInDBBase):
-    study_sessions: Optional[List["StudySession"]] = []
-    activities: Optional[List["Activity"]] = []
-    questions: Optional[List["Question"]] = []
-    answers: Optional[List["Answer"]] = []
+    study_sessions: Optional[List[StudySession]] = None
+    activities: Optional[List[Activity]] = None
+    questions: Optional[List[Question]] = None
+    answers: Optional[List[Answer]] = None

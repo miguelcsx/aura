@@ -1,10 +1,6 @@
-# app/schemas/answer.py
-
-from typing import (
-    Optional,
-    List,
-)
+from typing import Optional, List
 from pydantic import BaseModel
+from app.database.models import Answer
 
 
 class AnswerBase(BaseModel):
@@ -25,12 +21,14 @@ class AnswerInDBBase(AnswerBase):
     question_id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
+        arbitrary_types_allowed = True
 
 
+# pylint: disable=function-redefined
 class Answer(AnswerInDBBase):
-    parent_answer: Optional["Answer"] = None
-    child_answers: Optional[List["Answer"]] = []
+    parent_answer: Optional[Answer] = None
+    child_answers: Optional[List[Answer]] = None
 
 
 class AnswerInDB(AnswerInDBBase):

@@ -1,9 +1,4 @@
-# app/schemas/study_session.py
-
-from typing import (
-    List,
-    Optional,
-)
+from typing import List, Optional
 from datetime import datetime
 from pydantic import BaseModel
 from app.database.models import Activity
@@ -27,11 +22,12 @@ class StudySessionInDBBase(StudySessionBase):
     user_id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
+        arbitrary_types_allowed = True
 
 
 class StudySession(StudySessionInDBBase):
-    activities: Optional[List["Activity"]] = []
+    activities: Optional[List[Activity]] = None
 
 
 class StudySessionInDB(StudySessionInDBBase):

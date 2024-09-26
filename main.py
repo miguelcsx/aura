@@ -6,6 +6,10 @@ from fastapi import (
 from sqlalchemy.orm import Session
 import uvicorn
 from app.api.endpoints import (
+    activity,
+    answer,
+    question,
+    study_session,
     user,
 )
 from app.database.session import (
@@ -16,6 +20,10 @@ from app.database.session import (
 app = FastAPI()
 Base.metadata.create_all(bind=engine)
 
+app.include_router(activity.router)
+app.include_router(answer.router)
+app.include_router(question.router)
+app.include_router(study_session.router)
 app.include_router(user.router)
 
 
@@ -29,7 +37,7 @@ def get_session():
 
 @app.get("/")
 def read_root():
-    return {"Hello": "World"}
+    return {"message": "Welcome to AURA"}
 
 
 def main() -> None:
