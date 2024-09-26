@@ -9,7 +9,7 @@ from sqlalchemy import (
     DateTime,
 )
 from sqlalchemy.orm import relationship
-from app.database.session import Base
+from aura.database.session import Base
 
 
 class ActivityType(Enum):

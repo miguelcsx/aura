@@ -1,6 +1,6 @@
 from typing import Optional, List
 from pydantic import BaseModel
-from app.database.models import Answer
+from aura.database.models import Answer
 
 
 class AnswerBase(BaseModel):

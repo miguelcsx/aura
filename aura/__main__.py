@@ -5,14 +5,14 @@ from fastapi import (
 )
 from sqlalchemy.orm import Session
 import uvicorn
-from app.api.endpoints import (
+from aura.api.endpoints import (
     activity,
     answer,
     question,
     study_session,
     user,
 )
-from app.database.session import (
+from aura.database.session import (
     Base,
     engine,
 )

@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
-from app.database.models import Answer
-from app.schemas.answer import AnswerCreate, AnswerUpdate
+from aura.database.models import Answer
+from aura.schemas.answer import AnswerCreate, AnswerUpdate
 
 
 def create_answer(db: Session, answer: AnswerCreate) -> Answer:

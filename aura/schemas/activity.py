@@ -2,7 +2,7 @@ from typing import Optional
 from enum import Enum
 from datetime import datetime
 from pydantic import BaseModel
-from app.database.models import Question
+from aura.database.models import Question
 
 
 class ActivityType(str, Enum):

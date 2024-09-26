@@ -1,4 +1,4 @@
-# app/api/endpoints/answer.py
+# aura/api/endpoints/answer.py
 
 from fastapi import (
     APIRouter,
@@ -6,13 +6,13 @@ from fastapi import (
     HTTPException,
 )
 from sqlalchemy.orm import Session
-from app.database.session import get_db
-from app.schemas.answer import (
+from aura.database.session import get_db
+from aura.schemas.answer import (
     AnswerCreate,
     AnswerUpdate,
     AnswerInDBBase,
 )
-from app.repositories.answer_repository import (
+from aura.repositories.answer_repository import (
     create_answer,
     get_answer,
     get_answers,

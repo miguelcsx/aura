@@ -1,4 +1,4 @@
-# AURA - Adaptative Utility and Routine Assistant
+# AURA - Adaptive Utility and Routine Assistant
 
 AURA is an innovative API designed to revolutionize the way students learn. It provides a comprehensive platform where students can access a wide range of educational resources, receive personalized recommendations, and track their progress. AURA is built to enhance the learning experience by offering targeted support, adaptive learning routines, and intelligent assistance.
 
@@ -41,10 +41,10 @@ To use AURA, follow these steps:
     pip install -r requirements.txt
     ```
 
-3. Run the application:
+3. Run the main application:
 
     ```bash
-    python main.py
+    python -m aura
     ```
 
 ## Acknowledgements

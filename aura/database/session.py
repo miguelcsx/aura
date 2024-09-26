@@ -1,4 +1,4 @@
-# app/database/session.py
+# aura/database/session.py
 
 import os
 from typing import Generator

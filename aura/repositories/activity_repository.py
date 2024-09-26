@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
-from app.database.models import Activity
-from app.schemas.activity import ActivityCreate, ActivityUpdate
+from aura.database.models import Activity
+from aura.schemas.activity import ActivityCreate, ActivityUpdate
 
 
 def create_activity(db: Session, activity: ActivityCreate) -> Activity:

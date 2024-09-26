@@ -1,8 +1,8 @@
-# app/repositories/study_repository.py
+# aura/repositories/study_repository.py
 
 from sqlalchemy.orm import Session
-from app.database.models import StudySession
-from app.schemas.study_session import StudySessionCreate, StudySessionUpdate
+from aura.database.models import StudySession
+from aura.schemas.study_session import StudySessionCreate, StudySessionUpdate
 
 
 def create_study_session(

@@ -19,3 +19,9 @@ repos:
         language: python
         types: [yaml]
         files: \.(yml|yaml)$
+
+      - id: rust-check
+        name: Check Rust Code
+        entry: ./scripts/check_rust.sh
+        files: discord/
+        language: rust
