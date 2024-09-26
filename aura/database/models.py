@@ -1,3 +1,4 @@
+from datetime import datetime
 from enum import Enum
 from sqlalchemy import (
     Column,
@@ -12,8 +13,16 @@ from sqlalchemy.orm import relationship
 from aura.database.session import Base
 
 
-class ActivityType(Enum):
+class UserRole(str, Enum):
+    student = "student"
+    teacher = "teacher"
+    admin = "admin"
+
+
+class ActivityType(str, Enum):
     question = "question"
+    answer = "answer"
+    note = "note"
 
 
 class User(Base):
@@ -22,9 +31,9 @@ class User(Base):
     id = Column(Integer, primary_key=True, index=True)
     username = Column(String, unique=True, index=True)
     email = Column(String, unique=True, index=True)
-    role = Column(String)
-    created_at = Column(DateTime)
-    updated_at = Column(DateTime)
+    role = Column(SQLEnum(UserRole), nullable=False)
+    created_at = Column(DateTime, default=datetime.now())
+    updated_at = Column(DateTime, default=datetime.now(), onupdate=datetime.now())
 
     study_sessions = relationship("StudySession", back_populates="user")
     activities = relationship("Activity", back_populates="user")
@@ -52,7 +61,7 @@ class Activity(Base):
     study_session_id = Column(Integer, ForeignKey("study_sessions.id"))
     type = Column(SQLEnum(ActivityType), nullable=False)
     activity = Column(String)
-    created_at = Column(DateTime)
+    created_at = Column(DateTime, default=datetime.now())
 
     user = relationship("User", back_populates="activities")
     study_session = relationship("StudySession", back_populates="activities")

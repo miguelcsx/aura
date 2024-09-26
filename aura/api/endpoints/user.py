@@ -23,14 +23,14 @@ from aura.repositories.user_repository import (
 router = APIRouter()
 
 
-@router.post("/users/", response_model=UserInDBBase)
+@router.post("/user/", response_model=UserInDBBase)
 def create_user_endpoint(
     user: UserCreate, db: Session = Depends(get_db)
 ) -> UserInDBBase:
     return create_user(db, user)
 
 
-@router.get("/users/{user_id}", response_model=UserInDBBase)
+@router.get("/user/{user_id}", response_model=UserInDBBase)
 def read_user(user_id: int, db: Session = Depends(get_db)) -> UserInDBBase:
     user = get_user(db, user_id)
     if user is None:
@@ -38,14 +38,14 @@ def read_user(user_id: int, db: Session = Depends(get_db)) -> UserInDBBase:
     return user
 
 
-@router.get("/users/", response_model=list[UserInDBBase])
+@router.get("/user/", response_model=list[UserInDBBase])
 def read_users(
     skip: int = 0, limit: int = 10, db: Session = Depends(get_db)
 ) -> list[UserInDBBase]:
     return get_users(db, skip, limit)
 
 
-@router.put("/users/{user_id}", response_model=UserInDBBase)
+@router.put("/user/{user_id}", response_model=UserInDBBase)
 def update_user_endpoint(
     user_id: int, user: UserUpdate, db: Session = Depends(get_db)
 ) -> UserInDBBase:
@@ -55,7 +55,7 @@ def update_user_endpoint(
     return update_user(db, user_id, user.model_dump())
 
 
-@router.delete("/users/{user_id}", response_model=UserInDBBase)
+@router.delete("/user/{user_id}", response_model=UserInDBBase)
 def delete_user_endpoint(user_id: int, db: Session = Depends(get_db)) -> UserInDBBase:
     user = delete_user(db, user_id)
     if user is None:

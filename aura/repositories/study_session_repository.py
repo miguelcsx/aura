@@ -28,11 +28,16 @@ def get_study_sessions(
 def update_study_session(
     db: Session, study_session_id: int, study_session: StudySessionUpdate
 ) -> StudySession:
-    db.query(StudySession).filter(StudySession.id == study_session_id).update(
-        study_session.model_dump()
+    db_study_session = (
+        db.query(StudySession).filter(StudySession.id == study_session_id).first()
     )
-    db.commit()
-    return db.query(StudySession).filter(StudySession.id == study_session_id).first()
+    if db_study_session:
+        update_data = study_session.model_dump(exclude_unset=True)
+        for key, value in update_data.items():
+            setattr(db_study_session, key, value)
+        db.commit()
+        db.refresh(db_study_session)
+    return db_study_session
 
 
 def delete_study_session(db: Session, study_session_id: int) -> StudySession:

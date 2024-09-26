@@ -1,5 +1,7 @@
+# aura/schemas/answer.py
+
 from typing import Optional, List
-from pydantic import BaseModel
+from pydantic import ConfigDict, BaseModel
 from aura.database.models import Answer
 
 
@@ -19,10 +21,7 @@ class AnswerInDBBase(AnswerBase):
     id: int
     user_id: int
     question_id: int
-
-    class Config:
-        from_attributes = True
-        arbitrary_types_allowed = True
+    model_config = ConfigDict(from_attributes=True, arbitrary_types_allowed=True)
 
 
 # pylint: disable=function-redefined

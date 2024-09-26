@@ -16,11 +16,11 @@ repos:
       - id: format-yaml
         name: Format YAML Files
         entry: yamlfmt
-        language: python
+        language: system
         types: [yaml]
         files: \.(yml|yaml)$
 
       - id: rust-check
         name: Check Rust Code
         entry: ./scripts/check_rust.sh
-        language: rust
+        language: system

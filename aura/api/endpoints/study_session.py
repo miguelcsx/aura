@@ -23,14 +23,14 @@ from aura.repositories.study_session_repository import (
 router = APIRouter()
 
 
-@router.post("/study_sessions/", response_model=StudySessionInDBBase)
+@router.post("/study_session/", response_model=StudySessionInDBBase)
 def create_study_session_endpoint(
     study_session: StudySessionCreate, db: Session = Depends(get_db)
 ) -> StudySessionInDBBase:
     return create_study_session(db, study_session)
 
 
-@router.get("/study_sessions/{study_session_id}", response_model=StudySessionInDBBase)
+@router.get("/study_session/{study_session_id}", response_model=StudySessionInDBBase)
 def read_study_session(
     study_session_id: int, db: Session = Depends(get_db)
 ) -> StudySessionInDBBase:
@@ -40,14 +40,14 @@ def read_study_session(
     return study_session
 
 
-@router.get("/study_sessions/", response_model=list[StudySessionInDBBase])
+@router.get("/study_session/", response_model=list[StudySessionInDBBase])
 def read_study_sessions(
     skip: int = 0, limit: int = 10, db: Session = Depends(get_db)
 ) -> list[StudySessionInDBBase]:
     return get_study_sessions(db, skip, limit)
 
 
-@router.put("/study_sessions/{study_session_id}", response_model=StudySessionInDBBase)
+@router.put("/study_session/{study_session_id}", response_model=StudySessionInDBBase)
 def update_study_session_endpoint(
     study_session_id: int,
     study_session: StudySessionUpdate,
@@ -59,9 +59,7 @@ def update_study_session_endpoint(
     return update_study_session(db, study_session_id, study_session.model_dump())
 
 
-@router.delete(
-    "/study_sessions/{study_session_id}", response_model=StudySessionInDBBase
-)
+@router.delete("/study_session/{study_session_id}", response_model=StudySessionInDBBase)
 def delete_study_session_endpoint(
     study_session_id: int, db: Session = Depends(get_db)
 ) -> StudySessionInDBBase:
