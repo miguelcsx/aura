@@ -6,13 +6,13 @@ from fastapi import (
     HTTPException,
 )
 from sqlalchemy.orm import Session
-from app.database.session import get_db
-from app.schemas.study_session import (
+from aura.database.session import get_db
+from aura.schemas.study_session import (
     StudySessionCreate,
     StudySessionUpdate,
     StudySessionInDBBase,
 )
-from app.repositories.study_session_repository import (
+from aura.repositories.study_session_repository import (
     create_study_session,
     get_study_session,
     get_study_sessions,

@@ -1,8 +1,8 @@
 # app/repositories/user_repository.py
 
 from sqlalchemy.orm import Session
-from app.database.models import User
-from app.schemas.user import UserCreate, UserUpdate
+from aura.database.models import User
+from aura.schemas.user import UserCreate, UserUpdate
 
 
 def create_user(db: Session, user: UserCreate) -> User:

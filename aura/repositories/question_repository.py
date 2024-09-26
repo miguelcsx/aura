@@ -1,8 +1,8 @@
 # app/repositories/question_repository.py
 
 from sqlalchemy.orm import Session
-from app.database.models import Question
-from app.schemas.question import QuestionCreate, QuestionUpdate
+from aura.database.models import Question
+from aura.schemas.question import QuestionCreate, QuestionUpdate
 
 
 def create_question(db: Session, question: QuestionCreate) -> Question:

@@ -6,13 +6,13 @@ from fastapi import (
     HTTPException,
 )
 from sqlalchemy.orm import Session
-from app.database.session import get_db
-from app.schemas.activity import (
+from aura.database.session import get_db
+from aura.schemas.activity import (
     ActivityCreate,
     ActivityUpdate,
     ActivityInDBBase,
 )
-from app.repositories.activity_repository import (
+from aura.repositories.activity_repository import (
     create_activity,
     get_activity,
     get_activities,

@@ -1,7 +1,7 @@
 from typing import List, Optional
 from datetime import datetime
 from pydantic import BaseModel
-from app.database.models import Activity
+from aura.database.models import Activity
 
 
 class StudySessionBase(BaseModel):

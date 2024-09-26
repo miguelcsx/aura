@@ -6,13 +6,13 @@ from fastapi import (
     HTTPException,
 )
 from sqlalchemy.orm import Session
-from app.database.session import get_db
-from app.schemas.question import (
+from aura.database.session import get_db
+from aura.schemas.question import (
     QuestionCreate,
     QuestionUpdate,
     QuestionInDBBase,
 )
-from app.repositories.question_repository import (
+from aura.repositories.question_repository import (
     create_question,
     get_question,
     get_questions,
