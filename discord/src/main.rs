@@ -1,24 +1,42 @@
+// main.rs
+
+mod types;
+mod commands;
 mod config;
 mod services;
 
-use config::settings;
-use services::api_client;
+use types::Data;
+use poise::serenity_prelude as serenity;
+use crate::config::settings::{load_config, get_config};
 
 #[tokio::main(flavor = "current_thread")]
 async fn main() {
     // Load the configuration
-    settings::load_config();
+    load_config();
+    let config = get_config();
+    let token = &config.discord_token;
 
-    // Get the configuration
-    let config = settings::get_config();
+    // Set up intents
+    let intents = serenity::GatewayIntents::non_privileged();
 
-    // Print the configuration
-    println!("API URL: {}", config.api_url);
-    println!("Discord Token: {}", config.discord_token);
+    // Define the bot framework
+    let framework = poise::Framework::builder()
+        .options(poise::FrameworkOptions {
+            commands: vec![
+                commands::ping::ping(),
+            ],
+            ..Default::default()
+        })
+        .setup(|ctx, _ready, framework| {
+            Box::pin(async move {
+                poise::builtins::register_globally(ctx, &framework.options().commands).await?;
+                Ok(Data {})
+            })
+        })
+        .build();
 
-    // Get data from the API
-    match api_client::get("").await {
-        Ok(response) => println!("Response: {}", response),
-        Err(err) => eprintln!("Error: {}", err),
-    }
+        let client = serenity::ClientBuilder::new(token, intents)
+            .framework(framework)
+            .await;
+        client.unwrap().start().await.unwrap();
 }

@@ -8,6 +8,7 @@ import uvicorn
 from aura.api.endpoints import (
     activity,
     answer,
+    basic,
     question,
     study_session,
     user,
@@ -22,6 +23,7 @@ Base.metadata.create_all(bind=engine)
 
 app.include_router(activity.router)
 app.include_router(answer.router)
+app.include_router(basic.router)
 app.include_router(question.router)
 app.include_router(study_session.router)
 app.include_router(user.router)
@@ -33,11 +35,6 @@ def get_session():
         yield db
     finally:
         db.close()
-
-
-@app.get("/")
-def read_root():
-    return {"message": "Welcome to AURA"}
 
 
 def main() -> None:

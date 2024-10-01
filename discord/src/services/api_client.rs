@@ -1,11 +1,11 @@
-// discord/src/services/api_client.rs
+// services/api_client.rs
 
 use reqwest::Client;
 use crate::config::settings::get_config;
-use std::error::Error;
+use anyhow::{Result, Context};
+use serde_json::Value; // Add this import
 
-
-pub async fn get(endpoint: &str) -> Result<String, Box<dyn Error>> {
+pub async fn get(endpoint: &str) -> Result<String> {
     // Get the configuration
     let config = get_config();
 
@@ -16,16 +16,28 @@ pub async fn get(endpoint: &str) -> Result<String, Box<dyn Error>> {
     let client = Client::new();
 
     // Send a GET request to the API
-    let response = client.get(&url)
+    let response = client
+        .get(&url)
         .header("Authorization", &config.discord_token)
         .send()
-        .await?;
+        .await
+        .with_context(|| format!("Failed to send request to {url}"))?;
 
     if response.status().is_success() {
-        let body = response.text().await?;
-        Ok(body)
+        let body = response.text().await
+            .with_context(|| "Failed to parse response body")?;
+
+        // Parse the JSON response
+        let json: Value = serde_json::from_str(&body)
+            .with_context(|| "Failed to parse JSON response")?;
+        
+        // Extract the message
+        if let Some(message) = json.get("message").and_then(Value::as_str) {
+            Ok(message.to_string())
+        } else {
+            Err(anyhow::anyhow!("No message found in response"))
+        }
     } else {
-        Err("Failed to get data".into())
+        Err(anyhow::anyhow!("API request failed with status: {}", response.status()))
     }
 }
-
