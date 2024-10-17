@@ -1,9 +1,8 @@
-// discord/src/config/settings.rs
+// config/settings.rs
 
 use dotenv::dotenv;
 use once_cell::sync::OnceCell;
 use std::env;
-
 
 #[derive(Debug, Clone)]
 pub struct Config {

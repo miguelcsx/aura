@@ -1,42 +1,52 @@
 // main.rs
 
-mod types;
+mod cli;
 mod commands;
 mod config;
+mod events;
 mod services;
+mod types;
 
-use types::Data;
-use poise::serenity_prelude as serenity;
 use crate::config::settings::{load_config, get_config};
+use crate::events::handle_event;
+use poise::serenity_prelude::{self as serenity, GatewayIntents};
+use types::Data;
 
 #[tokio::main(flavor = "current_thread")]
 async fn main() {
-    // Load the configuration
     load_config();
     let config = get_config();
     let token = &config.discord_token;
 
-    // Set up intents
-    let intents = serenity::GatewayIntents::non_privileged();
+    // Set up intents for advanced features
+    let intents = GatewayIntents::GUILD_MESSAGES
+        | GatewayIntents::MESSAGE_CONTENT
+        | GatewayIntents::GUILD_MESSAGE_REACTIONS
+        | GatewayIntents::GUILD_MEMBERS;
 
     // Define the bot framework
     let framework = poise::Framework::builder()
-        .options(poise::FrameworkOptions {
-            commands: vec![
-                commands::ping::ping(),
-            ],
-            ..Default::default()
-        })
         .setup(|ctx, _ready, framework| {
             Box::pin(async move {
                 poise::builtins::register_globally(ctx, &framework.options().commands).await?;
                 Ok(Data {})
             })
         })
+        .options(poise::FrameworkOptions {
+            // event handlers for the bot (e.g. on_ready, on_message, which are in the events module)
+            event_handler: |ctx, event, framework, data| {
+                Box::pin(async move {
+                    handle_event(ctx, event, framework, data).await?;
+                    Ok(())
+                })
+            },
+            commands: vec![commands::ping::ping()],
+            ..Default::default()
+        })
         .build();
 
-        let client = serenity::ClientBuilder::new(token, intents)
-            .framework(framework)
-            .await;
-        client.unwrap().start().await.unwrap();
+    let client = serenity::ClientBuilder::new(token, intents)
+        .framework(framework)
+        .await;
+    client.unwrap().start().await.unwrap();
 }
