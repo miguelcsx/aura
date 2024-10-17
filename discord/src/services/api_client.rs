@@ -1,18 +1,16 @@
 // services/api_client.rs
 
-use reqwest::Client;
 use crate::config::settings::get_config;
 use anyhow::{Result, Context};
-use serde_json::Value; // Add this import
+use reqwest::Client;
+use serde_json::Value;
 
 pub async fn get(endpoint: &str) -> Result<String> {
-    // Get the configuration
     let config = get_config();
 
     // Construct the URL
     let url = format!("{}/{}", config.api_url, endpoint);
 
-    // Create a new reqwest client
     let client = Client::new();
 
     // Send a GET request to the API
@@ -24,12 +22,14 @@ pub async fn get(endpoint: &str) -> Result<String> {
         .with_context(|| format!("Failed to send request to {url}"))?;
 
     if response.status().is_success() {
-        let body = response.text().await
+        let body = response
+            .text()
+            .await
             .with_context(|| "Failed to parse response body")?;
 
         // Parse the JSON response
-        let json: Value = serde_json::from_str(&body)
-            .with_context(|| "Failed to parse JSON response")?;
+        let json: Value = 
+            serde_json::from_str(&body).with_context(|| "Failed to parse JSON response")?;
         
         // Extract the message
         if let Some(message) = json.get("message").and_then(Value::as_str) {
@@ -38,6 +38,9 @@ pub async fn get(endpoint: &str) -> Result<String> {
             Err(anyhow::anyhow!("No message found in response"))
         }
     } else {
-        Err(anyhow::anyhow!("API request failed with status: {}", response.status()))
+        Err(anyhow::anyhow!(
+            "API request failed with status: {}",
+            response.status()
+        ))
     }
 }

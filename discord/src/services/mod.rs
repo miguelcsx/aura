@@ -1,3 +1,3 @@
-// discord/src/services/mod.rs
+// services/mod.rs
 
 pub mod api_client;

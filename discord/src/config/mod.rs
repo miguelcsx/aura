@@ -1,3 +1,3 @@
-// discord/src/config/mod.rs
+// config/mod.rs
 
 pub mod settings;
