@@ -9,6 +9,7 @@ mod types;
 
 use crate::config::settings::{load_config, get_config};
 use crate::events::handle_event;
+use crate::events::error::on_error;
 use poise::serenity_prelude::{self as serenity, GatewayIntents};
 use types::Data;
 
@@ -41,6 +42,7 @@ async fn main() {
                 })
             },
             commands: vec![commands::ping::ping()],
+            on_error: |error| Box::pin(on_error(error)),
             ..Default::default()
         })
         .build();

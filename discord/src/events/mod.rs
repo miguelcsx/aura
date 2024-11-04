@@ -1,5 +1,6 @@
 // events/mod.rs
 
+pub mod error;
 pub mod ready;
 
 use crate::events::ready::on_ready;
