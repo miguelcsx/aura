@@ -9,6 +9,7 @@ from aura.api.endpoints import (
     activity,
     answer,
     basic,
+    discord_user,
     question,
     study_session,
     user,
@@ -24,6 +25,7 @@ Base.metadata.create_all(bind=engine)
 app.include_router(activity.router)
 app.include_router(answer.router)
 app.include_router(basic.router)
+app.include_router(discord_user.router)
 app.include_router(question.router)
 app.include_router(study_session.router)
 app.include_router(user.router)
