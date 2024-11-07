@@ -15,6 +15,8 @@ from aura.schemas.user import (
 from aura.repositories.user_repository import (
     create_user,
     get_user,
+    get_user_by_account,
+    get_user_by_email,
     get_users,
     update_user,
     delete_user,
@@ -33,6 +35,26 @@ def create_user_endpoint(
 @router.get("/user/{user_id}", response_model=UserInDBBase)
 def read_user(user_id: int, db: Session = Depends(get_db)) -> UserInDBBase:
     user = get_user(db, user_id)
+    if user is None:
+        raise HTTPException(status_code=404, detail="User not found")
+    return user
+
+
+# get user by email
+@router.get("/user/email/{email}", response_model=UserInDBBase)
+def read_user_by_email(email: str, db: Session = Depends(get_db)) -> UserInDBBase:
+    user = get_user_by_email(db, email)
+    if user is None:
+        raise HTTPException(status_code=404, detail="User not found")
+    return user
+
+
+# get user by account
+@router.get("/user/account/{account_id}", response_model=UserInDBBase)
+def read_user_by_account(
+    account_id: int, db: Session = Depends(get_db)
+) -> UserInDBBase:
+    user = get_user_by_account(db, account_id)
     if user is None:
         raise HTTPException(status_code=404, detail="User not found")
     return user

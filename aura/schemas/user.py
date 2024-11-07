@@ -10,6 +10,7 @@ class UserBase(BaseModel):
     username: str
     email: str
     role: UserRole
+    discord_id: str
 
 
 class UserCreate(UserBase):

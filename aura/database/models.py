@@ -34,6 +34,9 @@ class User(Base):
     username = Column(String, unique=True, index=True)
     email = Column(String, unique=True, index=True)
     role = Column(SQLEnum(UserRole), nullable=False)
+    discord_id = Column(
+        String, unique=True, nullable=True
+    )  # nullable should be False, but it's beta
     created_at = Column(DateTime, default=datetime.now())
     updated_at = Column(DateTime, default=datetime.now(), onupdate=datetime.now())
 
@@ -41,16 +44,6 @@ class User(Base):
     activities = relationship("Activity", back_populates="user")
     questions = relationship("Question", back_populates="user")
     answers = relationship("Answer", back_populates="user")
-    discord_user = relationship("DiscordUser", back_populates="user", uselist=False)
-
-
-class DiscordUser(Base):
-    __tablename__ = "discord_users"
-
-    id = Column(Integer, primary_key=True, index=True)
-    discord_id = Column(String, unique=True, index=True)
-    user_id = Column(Integer, ForeignKey("users.id"))
-    user = relationship("User", back_populates="discord_user")
 
 
 class StudySession(Base):
