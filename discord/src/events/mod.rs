@@ -1,5 +1,4 @@
 // events/mod.rs
-
 pub mod connection;
 pub mod error;
 pub mod ready;
@@ -21,10 +20,6 @@ pub async fn handle_event(
         serenity::FullEvent::Message { new_message } => {
             println!("Message received: {:?}", new_message.content);
         }
-        serenity::FullEvent::TypingStart { event } => {
-            println!("User typing: {:?}", event.user_id);
-        }
-        // Add more event cases here, e.g. Message, Reaction, etc.
         _ => {}
     }
     Ok(())
