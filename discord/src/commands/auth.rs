@@ -11,7 +11,7 @@ where
     Fut: std::future::Future<Output = Result<(), Error>> + 'a,
 {
     // Check if the user is already registered
-    if let Err(e) = handle_user_connection(ctx.clone()).await {
+    if let Err(e) = handle_user_connection(ctx).await {
         ctx.say("Error handling user connection").await?;
         return Err(e);
     }
@@ -23,10 +23,12 @@ where
 // Macro to reduce boilerplate even further
 #[macro_export]
 macro_rules! command_with_auth {
-    ($name:ident, $cmd:expr) => {
+    ($name:ident, $cmd:expr $(, $arg:ident : $arg_ty:ty)*) => {
         #[poise::command(slash_command, prefix_command)]
-        pub async fn $name(ctx: Context<'_>) -> Result<(), Error> {
-            crate::commands::auth::with_auth(ctx, $cmd).await
+        pub async fn $name(ctx: Context<'_> $(, $arg: $arg_ty)*) -> Result<(), Error> {
+            $crate::commands::auth::with_auth(ctx, |ctx| async move {
+                $cmd(ctx $(, $arg)*).await
+            }).await
         }
     };
 }

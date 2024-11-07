@@ -1,7 +1,7 @@
 // services/api_client.rs
 
 use crate::config::settings::get_config;
-use anyhow::{Result, Context};
+use anyhow::{Context, Result};
 use reqwest::{Client, Response};
 use serde_json::Value;
 
@@ -16,8 +16,7 @@ async fn handle_response(response: Response) -> Result<String> {
             .context("Failed to parse response body")?;
             
         // Try to parse the response as JSON
-        let json: Value = serde_json::from_str(&body)
-            .context("Failed to parse JSON response")?;
+        let json: Value = serde_json::from_str(&body).context("Failed to parse JSON response")?;
             
         // If it's a message response, extract the message
         if let Some(message) = json.get("message").and_then(Value::as_str) {

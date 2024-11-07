@@ -8,8 +8,8 @@ mod services;
 mod types;
 
 use crate::config::settings::{load_config, get_config};
-use crate::events::handle_event;
 use crate::events::error::on_error;
+use crate::events::handle_event;
 use poise::serenity_prelude::{self as serenity, GatewayIntents};
 use types::Data;
 
@@ -41,7 +41,7 @@ async fn main() {
                     Ok(())
                 })
             },
-            commands: vec![commands::ping::ping()],
+            commands: vec![commands::help::help(), commands::ping::ping()],
             on_error: |error| Box::pin(on_error(error)),
             ..Default::default()
         })

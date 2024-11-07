@@ -8,7 +8,8 @@ pub async fn get_user_by_discord_id(discord_id: &str) -> Result<Option<Value>> {
     let endpoint = format!("user/account/{}", discord_id);
     match api_client::get(&endpoint).await {
         Ok(response) => {
-            let json: Value = serde_json::from_str(&response).context("Failed to parse JSON response")?;
+            let json: Value = 
+                serde_json::from_str(&response).context("Failed to parse JSON response")?;
             Ok(Some(json))
         }
         Err(e) => {
