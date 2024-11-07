@@ -3,3 +3,4 @@
 pub mod help;
 pub mod auth;
 pub mod ping;
+pub mod ai;

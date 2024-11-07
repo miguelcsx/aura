@@ -1,11 +1,13 @@
 # main.py
 
+from dotenv import load_dotenv
 from fastapi import (
     FastAPI,
 )
 from sqlalchemy.orm import Session
 import uvicorn
 from aura.api.endpoints import (
+    ai,
     activity,
     answer,
     basic,
@@ -21,6 +23,7 @@ from aura.database.session import (
 app = FastAPI()
 Base.metadata.create_all(bind=engine)
 
+app.include_router(ai.router)
 app.include_router(activity.router)
 app.include_router(answer.router)
 app.include_router(basic.router)
@@ -38,6 +41,7 @@ def get_session():
 
 
 def main() -> None:
+    load_dotenv()
     uvicorn.run(app, host="0.0.0.0", port=8000)
 
 

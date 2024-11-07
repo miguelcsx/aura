@@ -41,7 +41,7 @@ async fn main() {
                     Ok(())
                 })
             },
-            commands: vec![commands::help::help(), commands::ping::ping()],
+            commands: vec![commands::help::help(), commands::ping::ping(), commands::ai::ask()],
             on_error: |error| Box::pin(on_error(error)),
             ..Default::default()
         })
